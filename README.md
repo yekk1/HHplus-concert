@@ -110,3 +110,28 @@ sequenceDiagram
     사용자->>잔액시스템: 잔액 충전 요청
     잔액시스템->>사용자: 잔액 충전 응답
 ```
+
+## 기술 스택
+- Java Spring Boot
+- DB: MySQl + Redis
+- API Docs: Swagger
+- JPA, jwt ...
+## 패키지 구조
+```
+api/
+  <도메인>/ (concert, point, queue)
+    controller.java
+    request/
+    response/
+application/
+  <도메인>/
+    facade.java
+domain/
+  <도메인>/ 
+    usecase/
+    entity/
+infra/
+  <도메인>/
+common
+  config/
+```
