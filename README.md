@@ -111,6 +111,9 @@ sequenceDiagram
     잔액시스템->>사용자: 잔액 충전 응답
 ```
 
+## ERD
+![ERD](./src/docs/HHPlus_concert_ERD.png)
+
 ## 기술 스택
 - Java Spring Boot
 - DB: MySQl + Redis
