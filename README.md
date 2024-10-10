@@ -110,3 +110,34 @@ sequenceDiagram
     사용자->>잔액시스템: 잔액 충전 요청
     잔액시스템->>사용자: 잔액 충전 응답
 ```
+
+## ERD
+![ERD](./src/docs/HHPlus_concert_ERD.png)
+
+## API 명세
+프로젝트 실행 후 http://localhost:8080/swagger-ui/index.html 로
+확인, 혹은 프로젝트 내 [./src/docs/swagger](./src/docs/swagger)에서 md 파일로 확인할 수 있습니다.
+## 기술 스택
+- Java Spring Boot
+- DB: MySQl + Redis
+- API Docs: Swagger
+- JPA, jwt ...
+## 패키지 구조
+```
+api/
+  <도메인>/ (concert, point, queue)
+    controller.java
+    request/
+    response/
+application/
+  <도메인>/
+    facade.java
+domain/
+  <도메인>/ 
+    usecase/
+    entity/
+infra/
+  <도메인>/
+common
+  config/
+```
