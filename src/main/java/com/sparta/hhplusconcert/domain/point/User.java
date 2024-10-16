@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.domain.queue;
+package com.sparta.hhplusconcert.domain.point;
 
 import java.util.UUID;
 import lombok.AllArgsConstructor;
