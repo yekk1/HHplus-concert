@@ -20,13 +20,13 @@ public class ChargePointService {
   private final UserRepositoryImpl userRepository;
   private final PointHistoryRepositoryImpl pointHistoryRepository;
   @Getter
-  private static class Input {
+  public static class Input {
     Long userId;
     Long amount;
   }
   @Data
   @Builder
-  private static class Output {
+  public static class Output {
     Long userId;
     Long pointHistoryId;
   }

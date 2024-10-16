@@ -21,4 +21,9 @@ public class UserRepositoryImpl implements UserRepository {
     UserEntity savedUser = userJpaRepository.save(user);
     return savedUser.getId();
   }
+
+  @Override
+  public Long getPoint(Long id){
+    return userJpaRepository.findPointById(id);
+  }
 }

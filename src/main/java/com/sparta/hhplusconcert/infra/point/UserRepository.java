@@ -6,4 +6,6 @@ public interface UserRepository {
   UserEntity getUserData(Long id);
 
   Long chargePoint(UserEntity userEntity);
+
+  Long getPoint(Long id);
 }
