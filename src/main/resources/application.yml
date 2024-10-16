@@ -7,3 +7,20 @@ springdoc:
     disable-swagger-default-url: true
     display-request-duration: true
     operations-sorter: alpha
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    #      ddl-auto: validate #날리기 전에 해라
+    show-sql: true
+    generate-ddl: true
+    defer-datasource-initialization: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/concert?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+    username: testUser
+    password: testPw
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
