@@ -112,9 +112,10 @@ sequenceDiagram
 ```
 
 ## ERD
-![ERD](./src/docs/HHPlus_concert_ERD.png)
+![ERD](./src/docs/HHPlus_concert_ERD_v2.png)
 
 ## API 명세
+![ERD](./src/docs/swagger.png)
 프로젝트 실행 후 http://localhost:8080/swagger-ui/index.html 로
 확인, 혹은 프로젝트 내 [./src/docs/swagger](./src/docs/swagger)에서 md 파일로 확인할 수 있습니다.
 ## 기술 스택
@@ -132,9 +133,10 @@ api/
 application/
   <도메인>/
     facade.java
+usecase/
+  <도메인>/ 
 domain/
   <도메인>/ 
-    usecase/
     entity/
 infra/
   <도메인>/
