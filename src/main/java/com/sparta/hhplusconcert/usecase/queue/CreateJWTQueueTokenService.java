@@ -29,6 +29,7 @@ public class CreateJWTQueueTokenService {
 
   private final QueueTokenRepositoryImpl queueTokenRepository;
   @Getter
+  @Builder
   public static class Input{
     UUID userUuid;
   }

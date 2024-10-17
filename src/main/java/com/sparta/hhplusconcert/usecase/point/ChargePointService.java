@@ -20,6 +20,7 @@ public class ChargePointService {
   private final UserRepositoryImpl userRepository;
   private final PointHistoryRepositoryImpl pointHistoryRepository;
   @Getter
+  @Builder
   public static class Input {
     Long userId;
     Long amount;

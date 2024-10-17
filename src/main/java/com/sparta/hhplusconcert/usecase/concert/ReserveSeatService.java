@@ -21,6 +21,7 @@ public class ReserveSeatService {
   private final ConcertSeatRepositoryImpl concertSeatRepository;
   private final ConcertReservationRepositoryImpl concertReservationRepository;
   @Getter
+  @Builder
   public static class Input {
     Long seatId;
     Long userId;

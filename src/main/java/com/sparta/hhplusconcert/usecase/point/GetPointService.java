@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 public class GetPointService {
   private final UserRepositoryImpl userRepository;
   @Getter
+  @Builder
   public static class Input {
     Long UserId;
   }

@@ -31,6 +31,7 @@ public class PaySeatService {
   private final PaymentRepositoryImpl paymentRepository;
 
   @Getter
+  @Builder
   public static class Input {
     Long reservationId;
     Long seatId;

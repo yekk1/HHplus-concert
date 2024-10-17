@@ -19,6 +19,7 @@ public class GetConcertSchedulesService {
   private final ConcertScheduleRepositoryImpl concertScheduleRepository;
 
   @Getter
+  @Builder
   public static class Input {
     Long concertId;
   }
