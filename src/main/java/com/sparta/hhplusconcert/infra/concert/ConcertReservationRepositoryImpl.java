@@ -15,6 +15,7 @@ public class ConcertReservationRepositoryImpl implements ConcertReservationRepos
   private final ConcertReservationJpaRepository concertReservationJpaRepository;
 
   @Override
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
   public ConcertReservationEntity getReservationById(Long id) {
     return concertReservationJpaRepository.findById(id)
         .orElseThrow(() -> new EntityNotFoundException("해당하는 예약이 존재하지 않습니다. ID: " + id));
@@ -38,7 +39,7 @@ public class ConcertReservationRepositoryImpl implements ConcertReservationRepos
 //  }
 
   @Override
-  public Long generateSeatReservation(ConcertReservationEntity concertReservation) {
+  public Long saveSeatReservation(ConcertReservationEntity concertReservation) {
     ConcertReservationEntity savedConcertReservation = concertReservationJpaRepository.save(concertReservation);
     return savedConcertReservation.getId();
   }

@@ -27,11 +27,11 @@ public class PaymentEntity extends TimeBaseEntity {
   @Column(nullable = false)
   private Long reservationId;
 
-  private Integer seatNubmer;
+  private Long seatId;
 
   private Long userId;
 
   private Long amount;
 
-  private Boolean cancle = false;
+  private Boolean cancel = false;
 }

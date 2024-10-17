@@ -4,6 +4,6 @@ import com.sparta.hhplusconcert.domain.point.entity.PaymentEntity;
 
 public interface PaymentRepository {
 
-  Integer generatePayment(PaymentEntity payment);
+  Long generatePayment(PaymentEntity payment);
 
 }

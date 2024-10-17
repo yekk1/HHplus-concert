@@ -49,7 +49,7 @@ public class ReserveSeatService {
           .status(ReservationStatus.PENDING_PAYMENT)
           .expiredTime(LocalDateTime.now().plusMinutes(5))
           .build();
-      Long savedReservationId = concertReservationRepository.generateSeatReservation(concertReservation);
+      Long savedReservationId = concertReservationRepository.saveSeatReservation(concertReservation);
 
       //콘서트좌석 update
       concertSeat.setStatus(SeatStatus.RESERVED);

@@ -9,7 +9,7 @@ public interface ConcertReservationRepository {
   List<ConcertReservationEntity> getReservationsBySeatId(Long id);
   List<ConcertReservationEntity> getExpiredReservations(LocalDateTime currentTime);
 //  ConcertReservationEntity getReservationBySeatNumber(Integer seatNumber);
-  Long generateSeatReservation(ConcertReservationEntity concertReservation);
+  Long saveSeatReservation(ConcertReservationEntity concertReservation);
   Integer saveAll(List<ConcertReservationEntity> concertReservations);
 //  Integer updateReservation(List<Long> ids, ReservationStatus status);
 }

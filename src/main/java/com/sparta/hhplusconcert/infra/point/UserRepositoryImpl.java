@@ -17,6 +17,12 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
   @Override
+  public Long userPoint(UserEntity user) {
+    UserEntity savedUser = userJpaRepository.save(user);
+    return savedUser.getId();
+  }
+
+  @Override
   public Long chargePoint(UserEntity user){
     UserEntity savedUser = userJpaRepository.save(user);
     return savedUser.getId();
