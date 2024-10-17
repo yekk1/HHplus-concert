@@ -25,8 +25,21 @@ public class ConcertSeatRepositoryImpl implements ConcertSeatRepository{
   }
 
   @Override
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
+  public List<ConcertSeatEntity> getSeatsById(List<Long> ids) {
+    return concertSeatJpaRepository.findAllById(ids);
+  }
+
+  @Override
   public Long updateSeat(ConcertSeatEntity concertSeat) {
     ConcertSeatEntity savedConcertSeat = concertSeatJpaRepository.save(concertSeat);
     return savedConcertSeat.getId();
+  }
+
+  @Override
+  public Integer saveAll(
+      List<ConcertSeatEntity> concertSeat) {
+    List<ConcertSeatEntity> savedReservations = concertSeatJpaRepository.saveAll(concertSeat);
+    return savedReservations.size();
   }
 }

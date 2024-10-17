@@ -8,5 +8,9 @@ public interface ConcertSeatRepository {
 
   ConcertSeatEntity getSeatById(Long id);
 
+  List<ConcertSeatEntity> getSeatsById(List<Long> ids);
+
   Long updateSeat(ConcertSeatEntity concertSeat);
+
+  Integer saveAll(List<ConcertSeatEntity> concertSeat);
 }

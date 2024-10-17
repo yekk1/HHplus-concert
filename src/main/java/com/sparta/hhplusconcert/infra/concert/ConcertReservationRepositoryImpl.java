@@ -1,9 +1,9 @@
 package com.sparta.hhplusconcert.infra.concert;
 
-import com.sparta.hhplusconcert.domain.concert.ReservationStatus;
 import com.sparta.hhplusconcert.domain.concert.entity.ConcertReservationEntity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Lock;
@@ -26,6 +26,11 @@ public class ConcertReservationRepositoryImpl implements ConcertReservationRepos
     return concertReservationJpaRepository.findBySeatId(seatId);
   }
 
+  @Override
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
+  public List<ConcertReservationEntity> getExpiredReservations(LocalDateTime currentTime) {
+    return concertReservationJpaRepository.findExpiredReservations(currentTime);
+  }
 
 //  @Override
 //  public ConcertReservationEntity getReservationBySeatNumber(Integer seatNumber) {
@@ -39,7 +44,13 @@ public class ConcertReservationRepositoryImpl implements ConcertReservationRepos
   }
 
   @Override
-  public Integer updateReservation(List<Long> ids, ReservationStatus status) {
-    return null;
+  public Integer saveAll(
+      List<ConcertReservationEntity> concertReservations) {
+    List<ConcertReservationEntity> savedReservations = concertReservationJpaRepository.saveAll(concertReservations);
+    return savedReservations.size();
   }
+  //  @Override
+//  public Integer updateReservation(List<Long> ids, ReservationStatus status) {
+//    return null;
+//  }
 }

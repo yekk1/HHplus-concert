@@ -4,6 +4,8 @@ import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
 import com.sparta.hhplusconcert.domain.concert.SeatStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,6 +38,7 @@ public class ConcertSeatEntity extends TimeBaseEntity {
   @Column(nullable = false)
   private Integer seatNumber;
 
+  @Enumerated(EnumType.STRING)
   private SeatStatus status;
 
 }
