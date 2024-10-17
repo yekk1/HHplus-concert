@@ -13,6 +13,6 @@ public class CheckQueueTokenService {
   private final QueueTokenRepositoryImpl queueTokenRepository;
   public Boolean check(String token) {
     QueueTokenEntity queueToken = queueTokenRepository.check(token);
-    return queueToken.isTokenPassedQueue();
+    return queueToken.isTokenPassedQueue() && !queueToken.isExpired();
   }
 }

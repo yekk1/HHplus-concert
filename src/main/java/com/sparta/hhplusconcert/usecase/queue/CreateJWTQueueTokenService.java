@@ -10,7 +10,10 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import jakarta.xml.bind.DatatypeConverter;
 import java.security.Key;
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -49,7 +52,7 @@ public class CreateJWTQueueTokenService {
     JwtBuilder builder = Jwts.builder()
         .setSubject(input.getUserUuid().toString())
         .setHeader(createHeader())
-        .setClaims(createClaims(input.getUserUuid().toString()))
+        .setClaims(createClaims(input.getUserUuid()))
         .signWith(SignatureAlgorithm.HS256, createSigningKey())
         ;
     String token = builder.compact();
@@ -70,7 +73,7 @@ public class CreateJWTQueueTokenService {
 
 
     return QueueTokenEntity.builder()
-        .userId(getUserUuidFromToken(token))
+        .userId(UUID.fromString(getUserUuidFromToken(token)))
         .token(token)
         .status(Status.WAITING)
         .issuedTime(getIssuedTimeFromToken(token))
@@ -83,18 +86,23 @@ public class CreateJWTQueueTokenService {
         .parseClaimsJws(token).getBody();
   }
 
-  private static UUID getUserUuidFromToken(String token) {
+  private static String getUserUuidFromToken(String token) {
     Claims claims = getClaimsFormToken(token);
-    return (UUID) claims.get("sub");
+    return claims.get("sub").toString();
   }
   private static LocalDateTime getExpiredTimeFromToken(String token) {
     Claims claims = getClaimsFormToken(token);
-    return (LocalDateTime) claims.get("exp");
+    return timeStampToLocalDateTime((Long)claims.get("exp"));
   }
 
+  private static LocalDateTime timeStampToLocalDateTime(Long timestamp) {
+    Instant instant = Instant.ofEpochMilli(timestamp);
+    LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+    return localDateTime;
+  }
   private static LocalDateTime getIssuedTimeFromToken(String token) {
     Claims claims = getClaimsFormToken(token);
-    return (LocalDateTime) claims.get("iat");
+    return timeStampToLocalDateTime((Long) claims.get("iat"));
   }
   private static Map<String, Object> createHeader() {
     Map<String, Object> header = new HashMap<>();
@@ -106,13 +114,13 @@ public class CreateJWTQueueTokenService {
     return header;
   }
 
-  private static Map<String, Object> createClaims(String userUuid) {
+  private static Map<String, Object> createClaims(UUID userUuid) {
     Map<String, Object> claims = new HashMap<>();
     LocalDateTime now = LocalDateTime.now();
 
-    claims.put("sub", userUuid);
-    claims.put("iat", now);
-    claims.put("exp", now.plusHours(3));
+    claims.put("sub", userUuid.toString());
+    claims.put("iat", now.toInstant(ZoneOffset.UTC).toEpochMilli());
+    claims.put("exp", now.plusHours(3).toInstant(ZoneOffset.UTC).toEpochMilli());
 
     return claims;
   }

@@ -47,6 +47,10 @@ public class QueueTokenEntity extends TimeBaseEntity{
   @Column(nullable = false, updatable = false)
   private LocalDateTime expiredTime;
 
+  public boolean isExpired() {
+    return LocalDateTime.now().isAfter(this.expiredTime);
+  }
+
   public boolean isTokenPassedQueue() {
     if (this.status == Status.CONNECTED) {
       return true;
