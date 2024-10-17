@@ -29,7 +29,7 @@ public class ConcertSeatEntity extends TimeBaseEntity {
   private Long concertId;
 
   @Column(nullable = false)
-  private Long schedulId;
+  private Long scheduleId;
 
   @Column(nullable = false)
   private Integer seatNumber;

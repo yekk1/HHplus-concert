@@ -33,8 +33,8 @@ public class GetConcertSchedulesService {
   }
 
   public List<Output> get(Input input) {
-    List<ConcertScheduleEntity> concertSchedule = concertScheduleRepository.getScheduleByConcertId(input.getConcertId());
-    return concertSchedule.stream()
+    List<ConcertScheduleEntity> concertSchedules = concertScheduleRepository.getScheduleByConcertId(input.getConcertId());
+    return concertSchedules.stream()
         .map(schedule -> Output.builder()
             .scheduleId(schedule.getId())
             .date(schedule.getDate())
