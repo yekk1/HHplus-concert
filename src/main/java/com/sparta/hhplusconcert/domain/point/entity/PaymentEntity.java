@@ -22,9 +22,9 @@ import lombok.NoArgsConstructor;
 public class PaymentEntity extends TimeBaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "payment_id")
   private Long id;
 
+  @Column(nullable = false)
   private Long reservationId;
 
   private Integer seatNubmer;
@@ -33,5 +33,5 @@ public class PaymentEntity extends TimeBaseEntity {
 
   private Long amount;
 
-  private Boolean cancle;
+  private Boolean cancle = false;
 }

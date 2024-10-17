@@ -27,7 +27,6 @@ import lombok.NoArgsConstructor;
 public class QueueTokenEntity extends TimeBaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  @Column(name = "token_id")
   private Long id;
 
   @Column(nullable = false)

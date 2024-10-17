@@ -25,7 +25,6 @@ import lombok.NoArgsConstructor;
 public class PointHistoryEntity extends TimeBaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "point_id")
   private Long id;
 
   @Column(nullable = false)

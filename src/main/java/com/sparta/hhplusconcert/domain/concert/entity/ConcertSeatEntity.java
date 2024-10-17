@@ -23,17 +23,17 @@ import lombok.NoArgsConstructor;
 public class ConcertSeatEntity extends TimeBaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "seat_id")
   private Long id;
 
+  @Column(nullable = false)
   private Long concertId;
 
+  @Column(nullable = false)
   private Long schedulId;
 
+  @Column(nullable = false)
   private Integer seatNumber;
 
   private SeatStatus status;
-
-  private Long userId;
 
 }

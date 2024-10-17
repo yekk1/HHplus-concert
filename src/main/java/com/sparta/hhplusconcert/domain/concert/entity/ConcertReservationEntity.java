@@ -24,15 +24,16 @@ import lombok.NoArgsConstructor;
 public class ConcertReservationEntity extends TimeBaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "reservation_id")
   private Long id;
 
+  @Column(nullable = false)
   private Long seatId;
 
   private Long userId;
 
   private ReservationStatus status;
 
+  @Column(updatable = false)
   private LocalDateTime expiredTime;
 
   public boolean isExpired() {
