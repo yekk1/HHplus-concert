@@ -41,8 +41,8 @@ public class ReserveSeatService {
     if(concertSeat.getStatus() == SeatStatus.EMPTY ||
         concertReservations.stream()
             .anyMatch(reservation ->
-                reservation.getStatus() == ReservationStatus.PENDING_PAYMENT ||
-                    reservation.getStatus() == ReservationStatus.PAYMENT_COMPLETED)
+                reservation.getStatus() != ReservationStatus.PENDING_PAYMENT &&
+                    reservation.getStatus() != ReservationStatus.PAYMENT_COMPLETED)
     ) {
       ConcertReservationEntity concertReservation = ConcertReservationEntity.builder()
           .seatId(concertSeat.getId())
@@ -60,8 +60,7 @@ public class ReserveSeatService {
           .seatId(savedSeatId)
           .build();
     } else {
-      System.err.println("이미 선택 된 좌석입니다.");
-      return null;
+      throw new RuntimeException("이미 선택 된 좌석입니다.");
     }
   }
 }
