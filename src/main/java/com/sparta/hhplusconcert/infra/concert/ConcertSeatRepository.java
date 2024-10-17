@@ -6,4 +6,7 @@ import java.util.List;
 public interface ConcertSeatRepository {
   List<ConcertSeatEntity> getSeatByScheduleId(Long scheduleId);
 
+  ConcertSeatEntity getSeatById(Long id);
+
+  Long updateSeat(ConcertSeatEntity concertSeat);
 }

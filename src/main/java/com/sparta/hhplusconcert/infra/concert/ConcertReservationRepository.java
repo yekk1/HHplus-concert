@@ -6,7 +6,8 @@ import java.util.List;
 
 public interface ConcertReservationRepository {
   ConcertReservationEntity getReservationById(Long id);
-  ConcertReservationEntity getReservationBySeatNumber(Integer seatNumber);
+  List<ConcertReservationEntity> getReservationsBySeatId(Long id);
+//  ConcertReservationEntity getReservationBySeatNumber(Integer seatNumber);
   Long generateSeatReservation(ConcertReservationEntity concertReservation);
   Integer updateReservation(List<Long> ids, ReservationStatus status);
 }
