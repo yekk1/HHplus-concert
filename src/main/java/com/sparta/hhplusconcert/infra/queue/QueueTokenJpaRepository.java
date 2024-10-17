@@ -28,4 +28,7 @@ public interface QueueTokenJpaRepository extends JpaRepository<QueueTokenEntity,
   @Query("UPDATE QueueTokenEntity q SET q.status = 'CONNECTED' WHERE q.id IN :ids")
   Integer updateStatusToConnected(List<Long> ids);
 
+  @Query("SELECT q FROM QueueTokenEntity q WHERE q.status != 'EXPIRED' AND q.expiredTime < :currentTime")
+  List<QueueTokenEntity> findExpiredTokens(@Param("currentTime") LocalDateTime currentTime);
+
 }

@@ -43,7 +43,7 @@ public class ConcertScheduler {
     Integer savedSeatsSize = concertSeatRepository.saveAll(concertSeats);
 
     if(savedReservationsSize != expiredReservations.size() || savedSeatsSize != concertSeats.size()){
-      System.err.println("자동 예약 취소를 실패했습니다.");
+      throw new RuntimeException("자동 예약 취소를 실패했습니다.");
     }
   }
 }

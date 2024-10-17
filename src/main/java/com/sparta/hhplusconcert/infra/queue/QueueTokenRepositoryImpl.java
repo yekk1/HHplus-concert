@@ -2,10 +2,12 @@ package com.sparta.hhplusconcert.infra.queue;
 
 import com.sparta.hhplusconcert.domain.common.Status;
 import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
+import jakarta.persistence.LockModeType;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -16,6 +18,12 @@ public class QueueTokenRepositoryImpl implements QueueTokenRepository{
   public Long save(QueueTokenEntity queueToken){
     QueueTokenEntity savedQueueToken = queueTokenJpaRepository.save(queueToken);
     return savedQueueToken.getId();
+  }
+
+  @Override
+  public Integer saveAll(List<QueueTokenEntity> queueTokens) {
+    List<QueueTokenEntity> savedTokens = queueTokenJpaRepository.saveAll(queueTokens);
+    return savedTokens.size();
   }
 
   @Override
@@ -41,5 +49,11 @@ public class QueueTokenRepositoryImpl implements QueueTokenRepository{
   @Override
   public Integer pushQueue(List<Long> ids) {
     return queueTokenJpaRepository.updateStatusToConnected(ids);
+  }
+
+  @Override
+  @Lock(LockModeType.PESSIMISTIC_WRITE)
+  public List<QueueTokenEntity> getExpiredQueueTokens(LocalDateTime currentTime) {
+    return queueTokenJpaRepository.findExpiredTokens(currentTime);
   }
 }

@@ -17,10 +17,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "QUEUE_TOKEN")
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -45,9 +47,6 @@ public class QueueTokenEntity extends TimeBaseEntity{
   @Column(nullable = false, updatable = false)
   private LocalDateTime expiredTime;
 
-  public boolean isExpired() {
-    return LocalDateTime.now().isAfter(this.expiredTime);
-  }
   public boolean isTokenPassedQueue() {
     if (this.status == Status.CONNECTED) {
       return true;
