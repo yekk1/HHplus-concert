@@ -15,14 +15,14 @@ public class TokenValidator {
     QueueTokenEntity queueToken = queueTokenRepository.check(token);
 
     if (queueToken == null) {
-      throw new RuntimeException("유효한 토큰이 아닙니다.");
+      throw new InvalidTokenException("유효한 토큰이 아닙니다.");
     }
     if(queueToken.isExpired()) {
-      throw new RuntimeException("토큰이 만료되었습니다.");
+      throw new ExpiredTokenException("토큰이 만료되었습니다.");
     }
     if(queueToken.isTokenPassedQueue()) {
       return true;
     }
-    return false;
+    throw new InvalidTokenException("유효한 토큰이 아닙니다.");
   }
 }
