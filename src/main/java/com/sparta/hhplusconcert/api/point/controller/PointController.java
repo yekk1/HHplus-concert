@@ -1,37 +1,43 @@
 package com.sparta.hhplusconcert.api.point.controller;
 
+import com.sparta.hhplusconcert.api.point.request.ChargePointRequest;
 import com.sparta.hhplusconcert.common.config.ApiResponse;
+import com.sparta.hhplusconcert.usecase.point.ChargePointService;
+import com.sparta.hhplusconcert.usecase.point.GetPointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/point")
+@RequestMapping("/v1/points")
 public class PointController {
+  private final ChargePointService chargePointService;
+  private final GetPointService getPointService;
 
-  // 잔액 충전
-  @PostMapping("/{userId}/charge")
-  @ResponseStatus(HttpStatus.CREATED)
-  public ApiResponse<Long> chargePoint(
-      @PathVariable Long userId
-      , @RequestBody long amount){
-    Long chargeId = 1L;
+  @PostMapping("/charge")
+  public ApiResponse<Long> chargePoint(@RequestBody ChargePointRequest request){
+    log.debug("PointController#chargePoint called.");
+    log.debug("ChargePointRequest={}", request);
+
+    Long chargeId = chargePointService.charge(ChargePointService.Input.builder().userId(request.getUserId()).amount(request.getAmount()).build()).getPointHistoryId();
+    log.debug("savedId={}", chargeId);
     return ApiResponse.created(chargeId);
   }
 
-  // 잔액 조회
   @GetMapping("{userId}")
-  public ApiResponse<Integer> getPoint(@PathVariable Long userId) {
-    Integer point = 10000;
+  public ApiResponse<Long> getPoint(@PathVariable Long userId) {
+    log.debug("PointController#getPoint called.");
+    log.debug("userId={}", userId);
+
+    Long point = getPointService.get(GetPointService.Input.builder().UserId(userId).build()).getPoint();
+    log.debug("point={}", point);
     return ApiResponse.ok(point);
   }
 }
