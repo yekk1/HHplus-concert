@@ -2,6 +2,7 @@ package com.sparta.hhplusconcert.usecase.queue;
 
 
 import com.sparta.hhplusconcert.domain.common.Status;
+import com.sparta.hhplusconcert.domain.queue.QueueTokenScheduler;
 import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
 import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
 import io.jsonwebtoken.Claims;
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 public class CreateJWTQueueTokenService {
 
   private final QueueTokenRepositoryImpl queueTokenRepository;
+  private final QueueTokenScheduler   queueTokenScheduler;
   @Getter
   @Builder
   public static class Input{
@@ -61,8 +63,11 @@ public class CreateJWTQueueTokenService {
     QueueTokenEntity queueToken = generateQueueToken(token);
     //저장
     Long savedId = saveToken(queueToken);
-    //Jwt토큰 반환
 
+    //대기 순번 없으면 한 번 내보내기
+    queueTokenScheduler.pushQueue();
+
+    //Jwt토큰 반환
     return Output.builder().token(token).build();
   }
   private Long saveToken(QueueTokenEntity queueToken) {
@@ -70,7 +75,6 @@ public class CreateJWTQueueTokenService {
     return saveId;
   }
   private QueueTokenEntity generateQueueToken(String token) {
-
 
     return QueueTokenEntity.builder()
         .userId(UUID.fromString(getUserUuidFromToken(token)))
