@@ -33,16 +33,16 @@ public class PaySeatService {
   @Getter
   @Builder
   public static class Input {
-    Long reservationId;
-    Long seatId;
-    Long userId;
-    Long amount;
+    private Long reservationId;
+    private Long seatId;
+    private Long userId;
+    private Long amount;
   }
 
   @Data
   @Builder
   public static class Output {
-    Long paymentId;
+    private Long paymentId;
   }
 
   @Transactional

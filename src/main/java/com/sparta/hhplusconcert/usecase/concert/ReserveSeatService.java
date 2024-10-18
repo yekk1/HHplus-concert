@@ -23,15 +23,15 @@ public class ReserveSeatService {
   @Getter
   @Builder
   public static class Input {
-    Long seatId;
-    Long userId;
+    private Long seatId;
+    private Long userId;
   }
 
   @Data
   @Builder
   public static class Output {
-    Long reservationId;
-    Long seatId;
+    private Long reservationId;
+    private Long seatId;
   }
 
   @Transactional

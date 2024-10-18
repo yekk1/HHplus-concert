@@ -36,13 +36,13 @@ public class CreateJWTQueueTokenService {
   @Getter
   @Builder
   public static class Input{
-    UUID userUuid;
+    private UUID userUuid;
   }
 
   @Data
   @Builder
   public static class Output{
-    String token;
+    private String token;
   }
 
   private static final String SECRET_KEY = "concertSecretKey";

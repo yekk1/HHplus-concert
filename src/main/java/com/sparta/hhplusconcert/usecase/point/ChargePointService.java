@@ -22,14 +22,14 @@ public class ChargePointService {
   @Getter
   @Builder
   public static class Input {
-    Long userId;
-    Long amount;
+    private Long userId;
+    private Long amount;
   }
   @Data
   @Builder
   public static class Output {
-    Long userId;
-    Long pointHistoryId;
+    private Long userId;
+    private Long pointHistoryId;
   }
   @Transactional
   public Output charge(Input input){

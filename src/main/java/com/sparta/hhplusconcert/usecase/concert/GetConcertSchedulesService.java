@@ -21,16 +21,16 @@ public class GetConcertSchedulesService {
   @Getter
   @Builder
   public static class Input {
-    Long concertId;
+    private Long concertId;
   }
 
   @Data
   @Builder
   public static class Output {
-    Long scheduleId;
-    LocalDate date;
-    Integer seatCapacity;
-    Integer seatLeft;
+    private Long scheduleId;
+    private LocalDate date;
+    private Integer seatCapacity;
+    private Integer seatLeft;
   }
 
   public List<Output> get(Input input) {

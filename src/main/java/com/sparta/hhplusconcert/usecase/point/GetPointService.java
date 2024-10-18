@@ -16,13 +16,13 @@ public class GetPointService {
   @Getter
   @Builder
   public static class Input {
-    Long UserId;
+    private Long UserId;
   }
 
   @Data
   @Builder
   public static class Output{
-    Long point;
+    private Long point;
   }
 
   public Output get(Input input) {
