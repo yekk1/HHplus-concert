@@ -1,6 +1,7 @@
 package com.sparta.hhplusconcert.usecase.queue;
 
 import com.sparta.hhplusconcert.domain.common.Status;
+import com.sparta.hhplusconcert.domain.queue.TokenValidator;
 import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
 import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
 import java.time.LocalDateTime;
@@ -14,13 +15,13 @@ import org.mockito.MockitoAnnotations;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-public class CheckQueueTokenServiceTest {
+public class TokenValidatorTest {
 
   @Mock
   private QueueTokenRepositoryImpl queueTokenRepository;
 
   @InjectMocks
-  private CheckQueueTokenService checkQueueTokenService;
+  private TokenValidator tokenValidator;
 
   @BeforeEach
   void setUp() {
@@ -43,7 +44,7 @@ public class CheckQueueTokenServiceTest {
     when(queueTokenRepository.check(token)).thenReturn(queueToken);
 
     // Then
-    Boolean result = checkQueueTokenService.check(token);
+    Boolean result = tokenValidator.isValid(token);
     assertThat(result).isTrue();
   }
 
@@ -63,7 +64,7 @@ public class CheckQueueTokenServiceTest {
     when(queueTokenRepository.check(token)).thenReturn(queueToken);
 
     // Then
-    Boolean result = checkQueueTokenService.check(token);
+    Boolean result = tokenValidator.isValid(token);
     assertThat(result).isFalse();
   }
 
@@ -83,7 +84,7 @@ public class CheckQueueTokenServiceTest {
     when(queueTokenRepository.check(token)).thenReturn(queueToken);
 
     // Then
-    Boolean result = checkQueueTokenService.check(token);
+    Boolean result = tokenValidator.isValid(token);
     assertThat(result).isFalse();
   }
 
@@ -103,7 +104,7 @@ public class CheckQueueTokenServiceTest {
     when(queueTokenRepository.check(token)).thenReturn(queueToken);
 
     // Then
-    Boolean result = checkQueueTokenService.check(token);
+    Boolean result = tokenValidator.isValid(token);
     assertThat(result).isFalse();
   }
 }

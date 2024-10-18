@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.usecase.queue;
+package com.sparta.hhplusconcert.domain.queue;
 
 import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
 import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
@@ -9,10 +9,20 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CheckQueueTokenService {
+public class TokenValidator {
   private final QueueTokenRepositoryImpl queueTokenRepository;
-  public Boolean check(String token) {
+  public Boolean isValid(String token) {
     QueueTokenEntity queueToken = queueTokenRepository.check(token);
-    return queueToken.isTokenPassedQueue() && !queueToken.isExpired();
+
+    if (queueToken == null) {
+      throw new RuntimeException("유효한 토큰이 아닙니다.");
+    }
+    if(queueToken.isExpired()) {
+      throw new RuntimeException("토큰이 만료되었습니다.");
+    }
+    if(queueToken.isTokenPassedQueue()) {
+      return true;
+    }
+    return false;
   }
 }
