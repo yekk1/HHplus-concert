@@ -28,7 +28,7 @@ public class GetConcertSchedulesService {
   @Builder
   public static class Output {
     private Long scheduleId;
-    private LocalDate date;
+    private LocalDate schedule;
     private Integer seatCapacity;
     private Integer seatLeft;
   }
@@ -38,7 +38,7 @@ public class GetConcertSchedulesService {
     return concertSchedules.stream()
         .map(schedule -> Output.builder()
             .scheduleId(schedule.getId())
-            .date(schedule.getDate())
+            .schedule(schedule.getDate())
             .seatCapacity(schedule.getSeatCapacity())
             .seatLeft(schedule.getSeatLeft())
             .build())

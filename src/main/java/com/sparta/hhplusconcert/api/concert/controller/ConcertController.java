@@ -1,83 +1,94 @@
 package com.sparta.hhplusconcert.api.concert.controller;
 
-import com.sparta.hhplusconcert.api.concert.request.PaySeatRequest;
-import com.sparta.hhplusconcert.api.concert.request.ReserveSeatRequest;
 import com.sparta.hhplusconcert.api.concert.response.GetConcertDatesResponse;
 import com.sparta.hhplusconcert.api.concert.response.GetConcertSeatsResponse;
 import com.sparta.hhplusconcert.common.config.ApiResponse;
+import com.sparta.hhplusconcert.usecase.concert.GetConcertSchedulesService;
+import com.sparta.hhplusconcert.usecase.concert.GetConcertSeatsService;
+import com.sparta.hhplusconcert.usecase.concert.ReserveSeatService;
 import jakarta.validation.Valid;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/concert")
+@RequestMapping("/v1/concerts")
 public class ConcertController {
+  private final GetConcertSchedulesService getConcertSchedulesService;
+  private final GetConcertSeatsService getConcertSeatsService;
+  private final ReserveSeatService reserveSeatService;
 
-  //예약가능 날짜 조회
-  @GetMapping("/{concertId}")
+  @GetMapping("/schedules/{concertId}")
   public ApiResponse<List<GetConcertDatesResponse>> getConcertDates(@PathVariable Long concertId) {
+    log.debug("ConcertController#createQueue called.");
+    log.debug("concertId={}", concertId);
+    List<GetConcertSchedulesService.Output> schedules = getConcertSchedulesService.get(GetConcertSchedulesService.Input.builder().concertId(concertId).build());
+
     List<GetConcertDatesResponse> responses = new ArrayList<>();
+    schedules.forEach(schedule -> {
+      GetConcertDatesResponse response = GetConcertDatesResponse.builder()
+          .id(schedule.getScheduleId())
+          .concertId(concertId)
+          .schedule(schedule.getSchedule())
+          .seatCapacity(schedule.getSeatCapacity())
+          .seatLeft(schedule.getSeatLeft())
+          .build();
 
-    GetConcertDatesResponse date1 = new GetConcertDatesResponse(1L, 1L, LocalDate.of(2024, 10, 1), "자리있음");
-    GetConcertDatesResponse date2 = new GetConcertDatesResponse(2L, 1L, LocalDate.of(2024, 10, 2), "만석");
+      responses.add(response);
+    });
 
-    responses.add(date1);
-    responses.add(date1);
+    log.debug("responses={}", responses);
 
     return ApiResponse.ok(responses);
   }
 
-  //좌석 조회
-  @GetMapping("/{concertId}/{date}")
+  @GetMapping("/seasts/{scheduleId}")
   public ApiResponse<List<GetConcertSeatsResponse>> getConcertSeats(
-      @PathVariable Long concertId
-      , @PathVariable Long date) {
+      @PathVariable Long scheduleId) {
+    log.debug("ConcertController#getConcertSeats called.");
+    log.debug("scheduleId={}", scheduleId);
+
+    List<GetConcertSeatsService.Output> seats = getConcertSeatsService.get(GetConcertSeatsService.Input.builder().scheduleId(scheduleId).build());
 
     List<GetConcertSeatsResponse> responses = new ArrayList<>();
+    seats.forEach(seat-> {
+      GetConcertSeatsResponse response = GetConcertSeatsResponse.builder()
+          .id(seat.getSeatId())
+          .seatNumber(seat.getSeatNumber())
+          .status(seat.getStatus().toString())
+          .build();
 
-    GetConcertSeatsResponse seat1 = new GetConcertSeatsResponse(1L,1L,1L,1,"예약중");
-    GetConcertSeatsResponse seat2 = new GetConcertSeatsResponse(2L,1L,1L,3,"비어있음");
+      responses.add(response);
+    });
 
-    responses.add(seat1);
-    responses.add(seat2);
+    log.debug("responses={}", responses);
 
     return ApiResponse.ok(responses);
   }
 
-  //좌석 예약
-  @PostMapping("/{userId}/reserve")
-  @ResponseStatus(HttpStatus.CREATED)
+  @PostMapping("/reserve/{seatId}/")
   public ApiResponse<Long> reserveSeat(
-      @PathVariable Long userId
-      , @Valid @RequestBody ReserveSeatRequest request
+      @PathVariable Long seatId
+      , @Valid @RequestBody Long userId
   ) {
-    Long reserveId = 1L;
-    return ApiResponse.created(reserveId);
+    log.debug("ConcertController#reserveSeat called.");
+    log.debug("userId={}", userId);
+
+    Long reservationId = reserveSeatService.reserve(ReserveSeatService.Input.builder().seatId(seatId).userId(userId).build()).getReservationId();
+
+    log.debug("reservationId={}", reservationId);
+
+    return ApiResponse.created(reservationId);
   }
 
-  //좌석 결제
-  @PostMapping("/{userId}/payments")
-  @ResponseStatus(HttpStatus.CREATED)
-  public ApiResponse<Long> paySeat(
-      @PathVariable Long userId
-      , @Valid @RequestBody PaySeatRequest request
-  ) {
-    Long paymentId = 1L;
-    return ApiResponse.created(paymentId);
-  }
+
 }
