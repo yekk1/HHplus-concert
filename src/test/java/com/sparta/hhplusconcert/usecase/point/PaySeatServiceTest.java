@@ -78,7 +78,7 @@ public class PaySeatServiceTest {
         .build();
 
     PointHistoryEntity pointHistory = PointHistoryEntity.builder()
-        .user_id(userId)
+        .userId(userId)
         .amount(user.getPoint()-amount)
         .type(PointTransactionType.USE)
         .build();

@@ -66,7 +66,7 @@ public class PaySeatService {
     Long userId = userRepository.userPoint(user);
 
     PointHistoryEntity pointHistory = PointHistoryEntity.builder()
-        .user_id(input.getUserId())
+        .userId(input.getUserId())
         .amount(input.getAmount())
         .type(PointTransactionType.USE)
         .build();

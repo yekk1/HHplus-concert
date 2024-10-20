@@ -28,7 +28,7 @@ public class PointHistoryEntity extends TimeBaseEntity {
   private Long id;
 
   @Column(nullable = false)
-  private Long user_id;
+  private Long userId;
 
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)

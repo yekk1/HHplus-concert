@@ -43,7 +43,7 @@ public class ChargePointService {
       Long savedUserId = userRepository.chargePoint(userToSave);
 
       PointHistoryEntity pointHistory = PointHistoryEntity.builder()
-          .user_id(input.getUserId())
+          .userId(input.getUserId())
           .amount(input.getAmount())
           .type(PointTransactionType.CHARGE)
           .build();
