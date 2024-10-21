@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.usecase.point;
+package com.sparta.hhplusconcert.point.usecase;
 
-import com.sparta.hhplusconcert.infra.point.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;

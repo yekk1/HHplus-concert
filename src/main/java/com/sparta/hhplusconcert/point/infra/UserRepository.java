@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.infra.point;
+package com.sparta.hhplusconcert.point.infra;
 
-import com.sparta.hhplusconcert.domain.point.entity.UserEntity;
+import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
 
 public interface UserRepository {
   UserEntity getUserData(Long id);

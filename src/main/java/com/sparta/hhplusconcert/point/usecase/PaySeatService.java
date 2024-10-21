@@ -1,18 +1,18 @@
-package com.sparta.hhplusconcert.usecase.point;
+package com.sparta.hhplusconcert.point.usecase;
 
 import com.sparta.hhplusconcert.concert.domain.ReservationStatus;
 import com.sparta.hhplusconcert.concert.domain.SeatStatus;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.domain.point.PointTransactionType;
-import com.sparta.hhplusconcert.domain.point.entity.PaymentEntity;
-import com.sparta.hhplusconcert.domain.point.entity.PointHistoryEntity;
-import com.sparta.hhplusconcert.domain.point.entity.UserEntity;
+import com.sparta.hhplusconcert.point.domain.PointTransactionType;
+import com.sparta.hhplusconcert.point.domain.entity.PaymentEntity;
+import com.sparta.hhplusconcert.point.domain.entity.PointHistoryEntity;
+import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
 import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
 import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
-import com.sparta.hhplusconcert.infra.point.PaymentRepositoryImpl;
-import com.sparta.hhplusconcert.infra.point.PointHistoryRepositoryImpl;
-import com.sparta.hhplusconcert.infra.point.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.PaymentRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.PointHistoryRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.Builder;

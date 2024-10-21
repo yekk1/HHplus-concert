@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.api.point.request;
+package com.sparta.hhplusconcert.point.api.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

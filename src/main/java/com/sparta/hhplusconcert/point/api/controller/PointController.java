@@ -1,11 +1,11 @@
-package com.sparta.hhplusconcert.api.point.controller;
+package com.sparta.hhplusconcert.point.api.controller;
 
-import com.sparta.hhplusconcert.api.point.request.PaySeatRequest;
-import com.sparta.hhplusconcert.api.point.request.ChargePointRequest;
+import com.sparta.hhplusconcert.point.api.request.PaySeatRequest;
+import com.sparta.hhplusconcert.point.api.request.ChargePointRequest;
 import com.sparta.hhplusconcert.common.config.ApiResponse;
-import com.sparta.hhplusconcert.usecase.point.ChargePointService;
-import com.sparta.hhplusconcert.usecase.point.GetPointService;
-import com.sparta.hhplusconcert.usecase.point.PaySeatService;
+import com.sparta.hhplusconcert.point.usecase.ChargePointService;
+import com.sparta.hhplusconcert.point.usecase.GetPointService;
+import com.sparta.hhplusconcert.point.usecase.PaySeatService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

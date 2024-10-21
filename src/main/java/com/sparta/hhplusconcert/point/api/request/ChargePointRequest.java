@@ -1,6 +1,5 @@
-package com.sparta.hhplusconcert.domain.point;
+package com.sparta.hhplusconcert.point.api.request;
 
-import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,12 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-  private Long id;
-
-  private UUID userUuid;
-
-  private Long point;
-
+public class ChargePointRequest {
+  private Long userId;
+  private Long amount;
 }
