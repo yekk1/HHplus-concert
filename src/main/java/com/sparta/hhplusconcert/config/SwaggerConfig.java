@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.common.config;
+package com.sparta.hhplusconcert.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

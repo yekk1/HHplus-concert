@@ -2,7 +2,7 @@ package com.sparta.hhplusconcert.concert.api.controller;
 
 import com.sparta.hhplusconcert.concert.api.response.GetConcertDatesResponse;
 import com.sparta.hhplusconcert.concert.api.response.GetConcertSeatsResponse;
-import com.sparta.hhplusconcert.common.config.ApiResponse;
+import com.sparta.hhplusconcert.config.ApiResponse;
 import com.sparta.hhplusconcert.concert.usecase.GetConcertSchedulesService;
 import com.sparta.hhplusconcert.concert.usecase.GetConcertSeatsService;
 import com.sparta.hhplusconcert.concert.usecase.ReserveSeatService;

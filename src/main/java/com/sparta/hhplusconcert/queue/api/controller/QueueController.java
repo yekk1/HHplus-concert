@@ -1,7 +1,7 @@
 package com.sparta.hhplusconcert.queue.api.controller;
 
 import com.sparta.hhplusconcert.queue.api.response.CreateQueueResponse;
-import com.sparta.hhplusconcert.common.config.ApiResponse;
+import com.sparta.hhplusconcert.config.ApiResponse;
 import com.sparta.hhplusconcert.queue.usecase.CreateJWTQueueTokenService;
 import com.sparta.hhplusconcert.queue.usecase.CreateJWTQueueTokenService.Input;
 import com.sparta.hhplusconcert.queue.usecase.GetRemainingQueueService;

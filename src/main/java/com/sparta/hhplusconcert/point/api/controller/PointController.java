@@ -2,7 +2,7 @@ package com.sparta.hhplusconcert.point.api.controller;
 
 import com.sparta.hhplusconcert.point.api.request.PaySeatRequest;
 import com.sparta.hhplusconcert.point.api.request.ChargePointRequest;
-import com.sparta.hhplusconcert.common.config.ApiResponse;
+import com.sparta.hhplusconcert.config.ApiResponse;
 import com.sparta.hhplusconcert.point.usecase.ChargePointService;
 import com.sparta.hhplusconcert.point.usecase.GetPointService;
 import com.sparta.hhplusconcert.point.usecase.PaySeatService;

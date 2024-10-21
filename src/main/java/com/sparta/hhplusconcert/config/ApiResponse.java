@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.common.config;
+package com.sparta.hhplusconcert.config;
 
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.FOUND;

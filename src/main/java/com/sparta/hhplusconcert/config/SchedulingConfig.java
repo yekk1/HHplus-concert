@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.common.config;
+package com.sparta.hhplusconcert.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
