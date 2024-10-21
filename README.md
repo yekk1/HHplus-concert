@@ -125,21 +125,14 @@ sequenceDiagram
 - JPA, jwt ...
 ## 패키지 구조
 ```
-api/
-  <도메인>/ (concert, point, queue)
-    controller.java
+<도메인>/ (concert, point, queue, config...)
+  api/
+    controller/
     request/
     response/
-application/
-  <도메인>/
-    facade.java
-usecase/
-  <도메인>/ 
-domain/
-  <도메인>/ 
+  usecase/
+  domain/
     entity/
-infra/
-  <도메인>/
-common
-  config/
+  infra/
+    
 ```
