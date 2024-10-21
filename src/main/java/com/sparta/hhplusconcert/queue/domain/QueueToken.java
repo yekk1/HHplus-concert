@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.domain.queue;
+package com.sparta.hhplusconcert.queue.domain;
 
 import com.sparta.hhplusconcert.domain.common.Status;
 import java.time.LocalDateTime;

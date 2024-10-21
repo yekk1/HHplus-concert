@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.api.queue.response;
+package com.sparta.hhplusconcert.queue.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

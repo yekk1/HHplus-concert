@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.domain.queue;
+package com.sparta.hhplusconcert.queue.domain;
 
 public class ExpiredTokenException extends RuntimeException {
   public ExpiredTokenException(String message) {

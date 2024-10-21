@@ -1,10 +1,10 @@
-package com.sparta.hhplusconcert.usecase.queue;
+package com.sparta.hhplusconcert.queue.usecase;
 
 import com.sparta.hhplusconcert.domain.common.Status;
-import com.sparta.hhplusconcert.domain.queue.ExpiredTokenException;
-import com.sparta.hhplusconcert.domain.queue.InvalidTokenException;
-import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.domain.ExpiredTokenException;
+import com.sparta.hhplusconcert.queue.domain.InvalidTokenException;
+import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

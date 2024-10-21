@@ -1,10 +1,10 @@
-package com.sparta.hhplusconcert.api.queue.controller;
+package com.sparta.hhplusconcert.queue.api.controller;
 
-import com.sparta.hhplusconcert.api.queue.response.CreateQueueResponse;
+import com.sparta.hhplusconcert.queue.api.response.CreateQueueResponse;
 import com.sparta.hhplusconcert.common.config.ApiResponse;
-import com.sparta.hhplusconcert.usecase.queue.CreateJWTQueueTokenService;
-import com.sparta.hhplusconcert.usecase.queue.CreateJWTQueueTokenService.Input;
-import com.sparta.hhplusconcert.usecase.queue.GetRemainingQueueService;
+import com.sparta.hhplusconcert.queue.usecase.CreateJWTQueueTokenService;
+import com.sparta.hhplusconcert.queue.usecase.CreateJWTQueueTokenService.Input;
+import com.sparta.hhplusconcert.queue.usecase.GetRemainingQueueService;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class QueueController {
   private final CreateJWTQueueTokenService createJWTQueueTokenService;
   private final GetRemainingQueueService getRemainingQueueService;
-  @PostMapping("/token")
+  @PostMapping("/token/generate")
   public ApiResponse<CreateQueueResponse> createQueue(
-      @RequestHeader("X-Uesr-UUID") UUID userUuid
+      @RequestHeader("X-USER-UUID") UUID userUuid
   ) {
     log.debug("QueueController#createQueue called.");
     log.debug("userUuid={}", userUuid);
@@ -42,8 +42,8 @@ public class QueueController {
 
   @GetMapping("/token")
   public ApiResponse<Integer> checkQueuePosition(
-      @RequestHeader("X-User-UUID") UUID userUuid
-      , @RequestHeader("X-Queue-Token") String token
+      @RequestHeader("X-USER-UUID") UUID userUuid
+      , @RequestHeader("X-QUEUE-TOKEN") String token
   ) {
     log.debug("QueueController#checkQueuePosition called.");
     log.debug("userUuid={}", userUuid);

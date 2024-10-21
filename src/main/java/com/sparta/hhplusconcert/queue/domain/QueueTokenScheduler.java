@@ -1,8 +1,8 @@
-package com.sparta.hhplusconcert.domain.queue;
+package com.sparta.hhplusconcert.queue.domain;
 
 import com.sparta.hhplusconcert.domain.common.Status;
-import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
