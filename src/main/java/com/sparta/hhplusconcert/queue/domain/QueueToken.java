@@ -1,6 +1,5 @@
 package com.sparta.hhplusconcert.queue.domain;
 
-import com.sparta.hhplusconcert.domain.common.Status;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Builder;

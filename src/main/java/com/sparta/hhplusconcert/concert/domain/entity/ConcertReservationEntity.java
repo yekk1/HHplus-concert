@@ -1,6 +1,6 @@
 package com.sparta.hhplusconcert.concert.domain.entity;
 
-import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
+import com.sparta.hhplusconcert.common.domain.TimeBaseEntity;
 import com.sparta.hhplusconcert.concert.domain.ReservationStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

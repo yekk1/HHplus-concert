@@ -1,6 +1,5 @@
 package com.sparta.hhplusconcert.queue.domain;
 
-import com.sparta.hhplusconcert.domain.common.Status;
 import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
 import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import jakarta.transaction.Transactional;

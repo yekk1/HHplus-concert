@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.domain.common;
+package com.sparta.hhplusconcert.common.domain;
 
 import static lombok.AccessLevel.PROTECTED;
 

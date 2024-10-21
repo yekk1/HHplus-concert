@@ -1,7 +1,7 @@
 package com.sparta.hhplusconcert.queue.domain.entity;
 
-import com.sparta.hhplusconcert.domain.common.Status;
-import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
+import com.sparta.hhplusconcert.queue.domain.Status;
+import com.sparta.hhplusconcert.common.domain.TimeBaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

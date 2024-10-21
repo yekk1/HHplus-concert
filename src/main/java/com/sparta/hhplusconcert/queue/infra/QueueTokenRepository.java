@@ -1,6 +1,6 @@
 package com.sparta.hhplusconcert.queue.infra;
 
-import com.sparta.hhplusconcert.domain.common.Status;
+import com.sparta.hhplusconcert.queue.domain.Status;
 import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
 import java.time.LocalDateTime;
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.sparta.hhplusconcert.point.domain.entity;
 
-import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
+import com.sparta.hhplusconcert.common.domain.TimeBaseEntity;
 import com.sparta.hhplusconcert.point.domain.PointTransactionType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

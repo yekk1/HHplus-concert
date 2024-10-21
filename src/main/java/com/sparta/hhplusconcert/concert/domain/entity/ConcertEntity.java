@@ -1,6 +1,6 @@
 package com.sparta.hhplusconcert.concert.domain.entity;
 
-import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
+import com.sparta.hhplusconcert.common.domain.TimeBaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

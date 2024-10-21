@@ -1,7 +1,7 @@
 package com.sparta.hhplusconcert.queue.usecase;
 
 
-import com.sparta.hhplusconcert.domain.common.Status;
+import com.sparta.hhplusconcert.queue.domain.Status;
 import com.sparta.hhplusconcert.queue.domain.QueueTokenScheduler;
 import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
 import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
