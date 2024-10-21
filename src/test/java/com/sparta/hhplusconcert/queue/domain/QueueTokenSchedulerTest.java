@@ -1,14 +1,12 @@
-package com.sparta.hhplusconcert.domain.queue;
+package com.sparta.hhplusconcert.queue.domain;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import com.sparta.hhplusconcert.domain.common.Status;
-import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -76,9 +74,10 @@ public class QueueTokenSchedulerTest {
   @Test
   void expireQueueToken_whenExpiredTokensPresent_shouldUpdateToExpired() {
     // Given
-    QueueTokenEntity expiredToken = QueueTokenEntity.builder().id(1L).build();
+    LocalDateTime issuedTime = LocalDateTime.now();
+    QueueTokenEntity expiredToken = QueueTokenEntity.builder().id(1L).issuedTime(issuedTime).build();
     expiredToken.setStatus(Status.WAITING);
-    when(queueTokenRepository.getExpiredQueueTokens(LocalDateTime.now()))
+    when(queueTokenRepository.getExpiredQueueTokens(issuedTime))
         .thenReturn(List.of(expiredToken));
 
     // When

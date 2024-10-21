@@ -1,9 +1,9 @@
-package com.sparta.hhplusconcert.usecase.point;
+package com.sparta.hhplusconcert.point.usecase;
 
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.sparta.hhplusconcert.infra.point.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

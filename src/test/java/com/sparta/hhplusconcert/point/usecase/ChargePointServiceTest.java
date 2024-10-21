@@ -1,11 +1,9 @@
-package com.sparta.hhplusconcert.usecase.point;
+package com.sparta.hhplusconcert.point.usecase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.sparta.hhplusconcert.domain.point.entity.PointHistoryEntity;
-import com.sparta.hhplusconcert.domain.point.entity.UserEntity;
-import com.sparta.hhplusconcert.infra.point.PointHistoryRepositoryImpl;
-import com.sparta.hhplusconcert.infra.point.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.domain.entity.PointHistoryEntity;
+import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
+import com.sparta.hhplusconcert.point.infra.PointHistoryRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;

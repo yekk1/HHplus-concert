@@ -1,9 +1,9 @@
-package com.sparta.hhplusconcert.usecase.queue;
+package com.sparta.hhplusconcert.queue.usecase;
 
-import com.sparta.hhplusconcert.domain.common.Status;
-import com.sparta.hhplusconcert.domain.queue.TokenValidator;
-import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.domain.Status;
+import com.sparta.hhplusconcert.queue.domain.TokenValidator;
+import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;

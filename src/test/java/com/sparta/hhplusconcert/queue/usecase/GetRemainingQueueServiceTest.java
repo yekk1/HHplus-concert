@@ -1,8 +1,8 @@
-package com.sparta.hhplusconcert.usecase.queue;
+package com.sparta.hhplusconcert.queue.usecase;
 
-import com.sparta.hhplusconcert.domain.common.Status;
-import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.domain.Status;
+import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

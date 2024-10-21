@@ -1,9 +1,7 @@
-package com.sparta.hhplusconcert.usecase.queue;
+package com.sparta.hhplusconcert.queue.usecase;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import com.sparta.hhplusconcert.domain.queue.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.infra.queue.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.xml.bind.DatatypeConverter;

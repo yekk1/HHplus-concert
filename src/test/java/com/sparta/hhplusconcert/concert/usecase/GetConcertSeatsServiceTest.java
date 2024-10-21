@@ -1,14 +1,13 @@
-package com.sparta.hhplusconcert.usecase.concert;
+package com.sparta.hhplusconcert.concert.usecase;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.sparta.hhplusconcert.domain.concert.SeatStatus;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.SeatStatus;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;

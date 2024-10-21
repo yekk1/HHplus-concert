@@ -1,14 +1,13 @@
-package com.sparta.hhplusconcert.usecase.concert;
+package com.sparta.hhplusconcert.concert.usecase;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertScheduleEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertScheduleRepositoryImpl;
-import com.sparta.hhplusconcert.usecase.concert.GetConcertSchedulesService.Output;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertScheduleEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertScheduleRepositoryImpl;
+import com.sparta.hhplusconcert.concert.usecase.GetConcertSchedulesService.Output;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -65,12 +64,12 @@ public class GetConcertSchedulesServiceTest {
     assertThat(result).hasSize(2);
 
     assertThat(result.get(0).getScheduleId()).isEqualTo(1L);
-    assertThat(result.get(0).getDate()).isEqualTo(LocalDate.of(2024, 1, 1));
+    assertThat(result.get(0).getSchedule()).isEqualTo(LocalDate.of(2024, 1, 1));
     assertThat(result.get(0).getSeatCapacity()).isEqualTo(50);
     assertThat(result.get(0).getSeatLeft()).isEqualTo(20);
 
     assertThat(result.get(1).getScheduleId()).isEqualTo(2L);
-    assertThat(result.get(1).getDate()).isEqualTo(LocalDate.of(2024, 1, 2));
+    assertThat(result.get(1).getSchedule()).isEqualTo(LocalDate.of(2024, 1, 2));
     assertThat(result.get(1).getSeatCapacity()).isEqualTo(50);
     assertThat(result.get(1).getSeatLeft()).isEqualTo(30);
 
