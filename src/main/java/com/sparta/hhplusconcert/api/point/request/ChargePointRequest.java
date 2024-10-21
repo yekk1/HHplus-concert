@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.api.concert.response;
+package com.sparta.hhplusconcert.api.point.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class GetConcertSeatsResponse {
-  private Long id;
-  private Integer seatNumber;
-  private String status;
+public class ChargePointRequest {
+  private Long userId;
+  private Long amount;
 }

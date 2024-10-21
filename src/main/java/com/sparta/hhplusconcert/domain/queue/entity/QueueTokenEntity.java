@@ -48,7 +48,7 @@ public class QueueTokenEntity extends TimeBaseEntity{
   private LocalDateTime expiredTime;
 
   public boolean isExpired() {
-    return LocalDateTime.now().isAfter(this.expiredTime);
+    return LocalDateTime.now().isAfter(this.expiredTime) || this.status == Status.EXPIRED;
   }
 
   public boolean isTokenPassedQueue() {

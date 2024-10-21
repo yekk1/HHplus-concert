@@ -21,15 +21,15 @@ public class GetConcertSeatsService {
   @Getter
   @Builder
   public static class Input {
-    Long scheduleId;
+    private Long scheduleId;
   }
 
   @Data
   @Builder
   public static class Output {
-    Long seatId;
-    Integer seatNumber;
-    SeatStatus status;
+    private Long seatId;
+    private Integer seatNumber;
+    private SeatStatus status;
   }
   //예약 가능한 콘서트 좌석 조회
   // 리스트로 반납
