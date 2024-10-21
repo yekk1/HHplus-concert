@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.infra.concert;
+package com.sparta.hhplusconcert.concert.infra;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertScheduleEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertScheduleEntity;
 import java.util.List;
 
 public interface ConcertScheduleRepository {

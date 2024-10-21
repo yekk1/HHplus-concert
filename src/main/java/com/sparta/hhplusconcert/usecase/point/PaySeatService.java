@@ -1,15 +1,15 @@
 package com.sparta.hhplusconcert.usecase.point;
 
-import com.sparta.hhplusconcert.domain.concert.ReservationStatus;
-import com.sparta.hhplusconcert.domain.concert.SeatStatus;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertReservationEntity;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.domain.ReservationStatus;
+import com.sparta.hhplusconcert.concert.domain.SeatStatus;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
 import com.sparta.hhplusconcert.domain.point.PointTransactionType;
 import com.sparta.hhplusconcert.domain.point.entity.PaymentEntity;
 import com.sparta.hhplusconcert.domain.point.entity.PointHistoryEntity;
 import com.sparta.hhplusconcert.domain.point.entity.UserEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertReservationRepositoryImpl;
-import com.sparta.hhplusconcert.infra.concert.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
 import com.sparta.hhplusconcert.infra.point.PaymentRepositoryImpl;
 import com.sparta.hhplusconcert.infra.point.PointHistoryRepositoryImpl;
 import com.sparta.hhplusconcert.infra.point.UserRepositoryImpl;

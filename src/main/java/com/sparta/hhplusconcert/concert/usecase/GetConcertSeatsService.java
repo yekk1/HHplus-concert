@@ -1,8 +1,8 @@
-package com.sparta.hhplusconcert.usecase.concert;
+package com.sparta.hhplusconcert.concert.usecase;
 
-import com.sparta.hhplusconcert.domain.concert.SeatStatus;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.SeatStatus;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Builder;

@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.domain.concert.entity;
+package com.sparta.hhplusconcert.concert.domain.entity;
 
 import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
 import jakarta.persistence.Entity;

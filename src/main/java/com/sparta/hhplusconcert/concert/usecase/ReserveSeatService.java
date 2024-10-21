@@ -1,11 +1,11 @@
-package com.sparta.hhplusconcert.usecase.concert;
+package com.sparta.hhplusconcert.concert.usecase;
 
-import com.sparta.hhplusconcert.domain.concert.ReservationStatus;
-import com.sparta.hhplusconcert.domain.concert.SeatStatus;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertReservationEntity;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertReservationRepositoryImpl;
-import com.sparta.hhplusconcert.infra.concert.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.ReservationStatus;
+import com.sparta.hhplusconcert.concert.domain.SeatStatus;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;

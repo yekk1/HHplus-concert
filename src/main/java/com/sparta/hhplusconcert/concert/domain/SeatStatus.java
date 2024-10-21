@@ -1,8 +1,7 @@
-package com.sparta.hhplusconcert.domain.concert;
+package com.sparta.hhplusconcert.concert.domain;
 
 public enum SeatStatus {
   EMPTY,
-
   RESERVED,
   PAID
 }

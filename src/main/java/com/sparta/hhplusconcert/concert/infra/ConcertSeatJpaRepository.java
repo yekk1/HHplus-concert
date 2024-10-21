@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.infra.concert;
+package com.sparta.hhplusconcert.concert.infra;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 

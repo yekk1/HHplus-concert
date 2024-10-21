@@ -1,7 +1,7 @@
-package com.sparta.hhplusconcert.usecase.concert;
+package com.sparta.hhplusconcert.concert.usecase;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertScheduleEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertScheduleRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertScheduleEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertScheduleRepositoryImpl;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;

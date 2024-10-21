@@ -1,30 +1,26 @@
-package com.sparta.hhplusconcert.domain.concert.entity;
+package com.sparta.hhplusconcert.concert.domain.entity;
 
 import com.sparta.hhplusconcert.domain.common.TimeBaseEntity;
-import com.sparta.hhplusconcert.domain.concert.SeatStatus;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table(name = "CONCERT_SEAT")
+@Table(name = "CONCERT_SCHEDULE")
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ConcertSeatEntity extends TimeBaseEntity {
+public class ConcertScheduleEntity extends TimeBaseEntity {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
@@ -33,12 +29,11 @@ public class ConcertSeatEntity extends TimeBaseEntity {
   private Long concertId;
 
   @Column(nullable = false)
-  private Long scheduleId;
+  private LocalDate date;
+
+  private Integer seatCapacity = 50;
 
   @Column(nullable = false)
-  private Integer seatNumber;
-
-  @Enumerated(EnumType.STRING)
-  private SeatStatus status;
+  private Integer seatLeft;
 
 }

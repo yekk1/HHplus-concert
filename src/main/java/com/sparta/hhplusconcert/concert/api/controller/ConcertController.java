@@ -1,11 +1,11 @@
-package com.sparta.hhplusconcert.api.concert.controller;
+package com.sparta.hhplusconcert.concert.api.controller;
 
-import com.sparta.hhplusconcert.api.concert.response.GetConcertDatesResponse;
-import com.sparta.hhplusconcert.api.concert.response.GetConcertSeatsResponse;
+import com.sparta.hhplusconcert.concert.api.response.GetConcertDatesResponse;
+import com.sparta.hhplusconcert.concert.api.response.GetConcertSeatsResponse;
 import com.sparta.hhplusconcert.common.config.ApiResponse;
-import com.sparta.hhplusconcert.usecase.concert.GetConcertSchedulesService;
-import com.sparta.hhplusconcert.usecase.concert.GetConcertSeatsService;
-import com.sparta.hhplusconcert.usecase.concert.ReserveSeatService;
+import com.sparta.hhplusconcert.concert.usecase.GetConcertSchedulesService;
+import com.sparta.hhplusconcert.concert.usecase.GetConcertSeatsService;
+import com.sparta.hhplusconcert.concert.usecase.ReserveSeatService;
 import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;

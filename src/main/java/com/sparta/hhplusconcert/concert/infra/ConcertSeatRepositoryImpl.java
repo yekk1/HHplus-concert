@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.infra.concert;
+package com.sparta.hhplusconcert.concert.infra;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
 import java.util.List;

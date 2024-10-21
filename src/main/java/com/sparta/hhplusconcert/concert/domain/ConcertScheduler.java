@@ -1,9 +1,9 @@
-package com.sparta.hhplusconcert.domain.concert;
+package com.sparta.hhplusconcert.concert.domain;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertReservationEntity;
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.infra.concert.ConcertReservationRepositoryImpl;
-import com.sparta.hhplusconcert.infra.concert.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;

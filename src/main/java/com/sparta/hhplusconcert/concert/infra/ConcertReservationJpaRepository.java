@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.infra.concert;
+package com.sparta.hhplusconcert.concert.infra;
 
-import com.sparta.hhplusconcert.domain.concert.entity.ConcertReservationEntity;
+import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
 import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
