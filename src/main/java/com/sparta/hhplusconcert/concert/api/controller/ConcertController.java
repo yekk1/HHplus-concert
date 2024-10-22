@@ -36,8 +36,8 @@ public class ConcertController {
   private final GetRemainingWaitingService getRemainingWaitingService;
 
   @GetMapping("/schedules/{concertId}")
-  public ApiResponse<List<GetConcertDatesResponse>> getConcertDates(@PathVariable Long concertId) {
-    log.debug("ConcertController#getConcertDates called.");
+  public ApiResponse<List<GetConcertDatesResponse>> getConcertSchedules(@PathVariable Long concertId) {
+    log.debug("ConcertController#getConcertSchedules called.");
     log.debug("concertId={}", concertId);
     List<GetConcertSchedulesService.Output> schedules = getConcertSchedulesService.get(GetConcertSchedulesService.Input.builder().concertId(concertId).build());
 
@@ -59,7 +59,7 @@ public class ConcertController {
     return ApiResponse.ok(responses);
   }
 
-  @GetMapping("/seasts/{scheduleId}")
+  @GetMapping("/seats/{scheduleId}")
   public ApiResponse<List<GetConcertSeatsResponse>> getConcertSeats(
       @PathVariable Long scheduleId) {
     log.debug("ConcertController#getConcertSeats called.");
@@ -83,7 +83,7 @@ public class ConcertController {
     return ApiResponse.ok(responses);
   }
 
-  @PostMapping("/reserve/{seatId}/")
+  @PostMapping("/reserve/{seatId}")
   public ApiResponse<Long> reserveSeat(
       @PathVariable Long seatId
       , @Valid @RequestBody Long userId
