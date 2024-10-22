@@ -5,11 +5,13 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.LockModeType;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
+@Qualifier("ConcertSeat")
 public class ConcertSeatRepositoryImpl implements ConcertSeatRepository{
   private final ConcertSeatJpaRepository concertSeatJpaRepository;
   @Override

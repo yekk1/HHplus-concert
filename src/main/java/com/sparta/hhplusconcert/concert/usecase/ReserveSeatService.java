@@ -4,8 +4,8 @@ import com.sparta.hhplusconcert.concert.domain.ReservationStatus;
 import com.sparta.hhplusconcert.concert.domain.SeatStatus;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
-import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepository;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -13,13 +13,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ReserveSeatService {
-  private final ConcertSeatRepositoryImpl concertSeatRepository;
-  private final ConcertReservationRepositoryImpl concertReservationRepository;
+
+  @Qualifier("ConcertSeat")
+  private final ConcertSeatRepository concertSeatRepository;
+  @Qualifier("ConcertReservation")
+  private final ConcertReservationRepository concertReservationRepository;
   @Getter
   @Builder
   public static class Input {

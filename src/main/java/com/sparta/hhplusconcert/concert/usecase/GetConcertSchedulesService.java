@@ -1,7 +1,7 @@
 package com.sparta.hhplusconcert.concert.usecase;
 
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertScheduleEntity;
-import com.sparta.hhplusconcert.concert.infra.ConcertScheduleRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertScheduleRepository;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,13 +10,16 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetConcertSchedulesService {
-  private final ConcertScheduleRepositoryImpl concertScheduleRepository;
+
+  @Qualifier("ConcertSchedule")
+  private final ConcertScheduleRepository concertScheduleRepository;
 
   @Getter
   @Builder
