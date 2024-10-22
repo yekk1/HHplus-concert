@@ -1,18 +1,20 @@
 package com.sparta.hhplusconcert.point.usecase;
 
-import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.UserRepository;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetPointService {
-  private final UserRepositoryImpl userRepository;
+  @Qualifier("User")
+  private final UserRepository userRepository;
   @Getter
   @Builder
   public static class Input {

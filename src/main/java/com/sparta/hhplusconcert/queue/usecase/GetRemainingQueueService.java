@@ -4,16 +4,18 @@ import com.sparta.hhplusconcert.queue.domain.Status;
 import com.sparta.hhplusconcert.queue.domain.ExpiredTokenException;
 import com.sparta.hhplusconcert.queue.domain.InvalidTokenException;
 import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetRemainingQueueService {
-  private final QueueTokenRepositoryImpl queueTokenRepository;
+  @Qualifier("QueueToken")
+  private final QueueTokenRepository queueTokenRepository;
 
   public Integer get(String token) {
     QueueTokenEntity queueToken = queueTokenRepository.check(token);

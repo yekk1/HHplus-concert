@@ -2,20 +2,24 @@ package com.sparta.hhplusconcert.concert.domain;
 
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
-import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepository;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
 public class ConcertScheduler {
-  private final ConcertSeatRepositoryImpl concertSeatRepository;
-  private final ConcertReservationRepositoryImpl concertReservationRepository;
+  @Qualifier("ConcertSeat")
+  private final ConcertSeatRepository concertSeatRepository;
+
+  @Qualifier("ConcertReservation")
+  private final ConcertReservationRepository concertReservationRepository;
   //임시 예약 만료 처리 (5분)
   @Scheduled(fixedRate = 10_000)
   public void expireReservations() {

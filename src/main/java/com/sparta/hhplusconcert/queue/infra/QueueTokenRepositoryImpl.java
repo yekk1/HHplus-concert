@@ -6,12 +6,14 @@ import jakarta.persistence.LockModeType;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
+@Qualifier("QueueToken")
 public class QueueTokenRepositoryImpl implements QueueTokenRepository{
   private final QueueTokenJpaRepository queueTokenJpaRepository;
   @Override

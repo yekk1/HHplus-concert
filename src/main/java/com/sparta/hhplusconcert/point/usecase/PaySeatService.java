@@ -4,31 +4,37 @@ import com.sparta.hhplusconcert.concert.domain.ReservationStatus;
 import com.sparta.hhplusconcert.concert.domain.SeatStatus;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertReservationEntity;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
+import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepository;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepository;
 import com.sparta.hhplusconcert.point.domain.PointTransactionType;
 import com.sparta.hhplusconcert.point.domain.entity.PaymentEntity;
 import com.sparta.hhplusconcert.point.domain.entity.PointHistoryEntity;
 import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
-import com.sparta.hhplusconcert.concert.infra.ConcertReservationRepositoryImpl;
-import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
-import com.sparta.hhplusconcert.point.infra.PaymentRepositoryImpl;
-import com.sparta.hhplusconcert.point.infra.PointHistoryRepositoryImpl;
-import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.PaymentRepository;
+import com.sparta.hhplusconcert.point.infra.PointHistoryRepository;
+import com.sparta.hhplusconcert.point.infra.UserRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class PaySeatService {
-  private final ConcertSeatRepositoryImpl concertSeatRepository;
-  private final ConcertReservationRepositoryImpl concertReservationRepository;
-  private final UserRepositoryImpl  userRepository;
-  private final PointHistoryRepositoryImpl pointHistoryRepository;
-  private final PaymentRepositoryImpl paymentRepository;
+  @Qualifier("ConcertSeat")
+  private final ConcertSeatRepository concertSeatRepository;
+  @Qualifier("ConcertReservation")
+  private final ConcertReservationRepository concertReservationRepository;
+  @Qualifier("User")
+  private final UserRepository userRepository;
+  @Qualifier("PointHistory")
+  private final PointHistoryRepository pointHistoryRepository;
+  @Qualifier("Payment")
+  private final PaymentRepository paymentRepository;
 
   @Getter
   @Builder

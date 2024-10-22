@@ -2,7 +2,7 @@ package com.sparta.hhplusconcert.concert.usecase;
 
 import com.sparta.hhplusconcert.concert.domain.SeatStatus;
 import com.sparta.hhplusconcert.concert.domain.entity.ConcertSeatEntity;
-import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepositoryImpl;
+import com.sparta.hhplusconcert.concert.infra.ConcertSeatRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.Builder;
@@ -10,13 +10,16 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetConcertSeatsService {
-  private final ConcertSeatRepositoryImpl concertSeatRepository;
+
+  @Qualifier("ConcertSeat")
+  private final ConcertSeatRepository concertSeatRepository;
 
   @Getter
   @Builder
