@@ -3,22 +3,25 @@ package com.sparta.hhplusconcert.point.usecase;
 import com.sparta.hhplusconcert.point.domain.PointTransactionType;
 import com.sparta.hhplusconcert.point.domain.entity.PointHistoryEntity;
 import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
-import com.sparta.hhplusconcert.point.infra.PointHistoryRepositoryImpl;
-import com.sparta.hhplusconcert.point.infra.UserRepositoryImpl;
+import com.sparta.hhplusconcert.point.infra.PointHistoryRepository;
+import com.sparta.hhplusconcert.point.infra.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChargePointService {
-  private final UserRepositoryImpl userRepository;
-  private final PointHistoryRepositoryImpl pointHistoryRepository;
+  @Qualifier("User")
+  private final UserRepository userRepository;
+  @Qualifier("PointHistory")
+  private final PointHistoryRepository pointHistoryRepository;
   @Getter
   @Builder
   public static class Input {
