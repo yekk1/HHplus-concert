@@ -1,0 +1,39 @@
+package com.sparta.hhplusconcert.concert.usecase;
+
+import com.sparta.hhplusconcert.concert.domain.Status;
+import com.sparta.hhplusconcert.concert.domain.ExpiredTokenException;
+import com.sparta.hhplusconcert.concert.domain.InvalidTokenException;
+import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
+import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class GetRemainingWaitingService {
+  @Qualifier("WaitingToken")
+  private final WaitingTokenRepository waitingTokenRepository;
+
+  public Integer get(String token) {
+    WaitingTokenEntity waitingToken = waitingTokenRepository.check(token);
+
+    if (waitingToken == null) {
+      throw new InvalidTokenException("유효한 토큰이 아닙니다.");
+    }
+
+    // 토큰이 대기 중 상태면 남은 순번 계산
+    if (waitingToken.getStatus() == Status.WAITING) {
+      long remainingQueue = waitingTokenRepository.countRemainingQueue(waitingToken.getIssuedTime(), Status.WAITING);
+      return (int) remainingQueue; // 남은 순번 반환
+    }
+
+    // 토큰이 접속 완료 상태면 0 반환
+    if (waitingToken.getStatus() == Status.CONNECTED) {
+      return 0; // 접속 완료로 간주
+    }
+    throw new ExpiredTokenException("토큰이 만료되었습니다.");
+  }
+}

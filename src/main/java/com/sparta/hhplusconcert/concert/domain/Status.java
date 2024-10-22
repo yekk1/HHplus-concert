@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.queue.domain;
+package com.sparta.hhplusconcert.concert.domain;
 
 import lombok.Getter;
 

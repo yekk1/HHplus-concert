@@ -1,11 +1,11 @@
-package com.sparta.hhplusconcert.queue.domain;
+package com.sparta.hhplusconcert.concert.domain;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.Builder;
 
 
-public record QueueToken (
+public record WaitingToken(
   UUID userId,
   String token,
   Status status,
@@ -13,5 +13,5 @@ public record QueueToken (
   LocalDateTime expiredTime) {
 
   @Builder
-  public QueueToken {}
+  public WaitingToken {}
 }

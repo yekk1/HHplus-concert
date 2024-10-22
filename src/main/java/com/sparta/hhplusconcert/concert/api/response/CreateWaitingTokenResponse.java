@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.queue.api.response;
+package com.sparta.hhplusconcert.concert.api.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CreateQueueResponse {
-  private String queueToken;
+public class CreateWaitingTokenResponse {
+  private String waitingToken;
   private Integer remainPosition;
 }
