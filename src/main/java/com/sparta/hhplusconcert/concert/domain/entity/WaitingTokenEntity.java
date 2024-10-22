@@ -1,6 +1,6 @@
-package com.sparta.hhplusconcert.queue.domain.entity;
+package com.sparta.hhplusconcert.concert.domain.entity;
 
-import com.sparta.hhplusconcert.queue.domain.Status;
+import com.sparta.hhplusconcert.concert.domain.Status;
 import com.sparta.hhplusconcert.common.domain.TimeBaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,13 +20,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "QUEUE_TOKEN")
+@Table(name = "WAITING_TOKEN")
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class QueueTokenEntity extends TimeBaseEntity{
+public class WaitingTokenEntity extends TimeBaseEntity{
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   private Long id;

@@ -125,7 +125,7 @@ sequenceDiagram
 - JPA, jwt ...
 ## 패키지 구조
 ```
-<도메인>/ (concert, point, queue, config...)
+<도메인>/ (concert, point, config...)
   api/
     controller/
     request/

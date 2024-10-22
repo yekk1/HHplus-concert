@@ -1,9 +1,9 @@
-package com.sparta.hhplusconcert.queue.usecase;
+package com.sparta.hhplusconcert.concert.usecase;
 
 
-import com.sparta.hhplusconcert.queue.domain.Status;
-import com.sparta.hhplusconcert.queue.domain.QueueTokenScheduler;
-import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
+import com.sparta.hhplusconcert.concert.domain.Status;
+import com.sparta.hhplusconcert.concert.domain.WaitingTokenScheduler;
+import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -23,18 +23,18 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepository;
+import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class CreateJWTQueueTokenService {
+public class CreateJWTWaitingTokenService {
 
-  @Qualifier("QueueToken")
-  private final QueueTokenRepository queueTokenRepository;
-  private final QueueTokenScheduler   queueTokenScheduler;
+  @Qualifier("WaitingToken")
+  private final WaitingTokenRepository waitingTokenRepository;
+  private final WaitingTokenScheduler waitingTokenScheduler;
   @Getter
   @Builder
   public static class Input{
@@ -62,23 +62,23 @@ public class CreateJWTQueueTokenService {
     String token = builder.compact();
 
     //Jwt토큰으로 큐토큰엔티티 생성
-    QueueTokenEntity queueToken = generateQueueToken(token);
+    WaitingTokenEntity waitingToken = generatewaitingToken(token);
     //저장
-    Long savedId = saveToken(queueToken);
+    Long savedId = saveToken(waitingToken);
 
     //대기 순번 없으면 한 번 내보내기
-    queueTokenScheduler.pushQueue();
+    waitingTokenScheduler.pushQueue();
 
     //Jwt토큰 반환
     return Output.builder().token(token).build();
   }
-  private Long saveToken(QueueTokenEntity queueToken) {
-    Long saveId = queueTokenRepository.save(queueToken);
+  private Long saveToken(WaitingTokenEntity waitingToken) {
+    Long saveId = waitingTokenRepository.save(waitingToken);
     return saveId;
   }
-  private QueueTokenEntity generateQueueToken(String token) {
+  private WaitingTokenEntity generatewaitingToken(String token) {
 
-    return QueueTokenEntity.builder()
+    return WaitingTokenEntity.builder()
         .userId(UUID.fromString(getUserUuidFromToken(token)))
         .token(token)
         .status(Status.WAITING)

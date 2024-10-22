@@ -1,7 +1,8 @@
-package com.sparta.hhplusconcert.queue.usecase;
+package com.sparta.hhplusconcert.concert.usecase;
 
-import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
+import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepositoryImpl;
+import com.sparta.hhplusconcert.concert.usecase.CreateJWTWaitingTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.xml.bind.DatatypeConverter;
@@ -19,13 +20,13 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class CreateJWTQueueTokenServiceTest {
+public class CreateJWTWaitingTokenServiceTest {
 
   @Mock
-  private QueueTokenRepositoryImpl queueTokenRepository;
+  private WaitingTokenRepositoryImpl waitingTokenRepository;
 
   @InjectMocks
-  private CreateJWTQueueTokenService createJWTQueueTokenService;
+  private CreateJWTWaitingTokenService createJWTWaitingTokenService;
 
   private static final String SECRET_KEY = "concertSecretKey";
 
@@ -35,17 +36,17 @@ public class CreateJWTQueueTokenServiceTest {
   }
 
   @Test
-  void testCreateJWTQueueToken_Success() {
+  void testCreateJWTwaitingToken_Success() {
     // Given
     UUID userUuid = UUID.randomUUID();
-    CreateJWTQueueTokenService.Input input = CreateJWTQueueTokenService.Input.builder()
+    CreateJWTWaitingTokenService.Input input = CreateJWTWaitingTokenService.Input.builder()
         .userUuid(userUuid)
         .build();
 
-    when(queueTokenRepository.save(any(QueueTokenEntity.class))).thenReturn(1L);
+    when(waitingTokenRepository.save(any(WaitingTokenEntity.class))).thenReturn(1L);
 
     // When
-    CreateJWTQueueTokenService.Output output = createJWTQueueTokenService.create(input);
+    CreateJWTWaitingTokenService.Output output = createJWTWaitingTokenService.create(input);
 
     // Then
     assertThat(output).isNotNull();
@@ -62,21 +63,21 @@ public class CreateJWTQueueTokenServiceTest {
     assertThat(claims.get("exp")).isNotNull();
 
     // 저장 로직 호출 여부 검증
-    verify(queueTokenRepository, times(1)).save(any(QueueTokenEntity.class));
+    verify(waitingTokenRepository, times(1)).save(any(WaitingTokenEntity.class));
   }
 
   @Test
-  void testCreateJWTQueueToken_TokenHasCorrectValues() {
+  void testCreateJWTwaitingToken_TokenHasCorrectValues() {
     // Given
     UUID userUuid = UUID.randomUUID();
-    CreateJWTQueueTokenService.Input input = CreateJWTQueueTokenService.Input.builder()
+    CreateJWTWaitingTokenService.Input input = CreateJWTWaitingTokenService.Input.builder()
         .userUuid(userUuid)
         .build();
 
-    when(queueTokenRepository.save(any(QueueTokenEntity.class))).thenReturn(1L);
+    when(waitingTokenRepository.save(any(WaitingTokenEntity.class))).thenReturn(1L);
 
     // When
-    CreateJWTQueueTokenService.Output output = createJWTQueueTokenService.create(input);
+    CreateJWTWaitingTokenService.Output output = createJWTWaitingTokenService.create(input);
 
     // Then
     assertThat(output).isNotNull();
@@ -101,22 +102,22 @@ public class CreateJWTQueueTokenServiceTest {
     assertThat(expiration.isAfter(issuedAt)).isTrue();
 
     // 저장 로직 검증
-    verify(queueTokenRepository, times(1)).save(any(QueueTokenEntity.class));
+    verify(waitingTokenRepository, times(1)).save(any(WaitingTokenEntity.class));
   }
 
   @Test
-  void testCreateJWTQueueToken_TokenSavingFails() {
+  void testCreateJWTwaitingToken_TokenSavingFails() {
     // Given
     UUID userUuid = UUID.randomUUID();
-    CreateJWTQueueTokenService.Input input = CreateJWTQueueTokenService.Input.builder()
+    CreateJWTWaitingTokenService.Input input = CreateJWTWaitingTokenService.Input.builder()
         .userUuid(userUuid)
         .build();
 
     // 저장 실패 시 0L 반환
-    when(queueTokenRepository.save(any(QueueTokenEntity.class))).thenReturn(0L);
+    when(waitingTokenRepository.save(any(WaitingTokenEntity.class))).thenReturn(0L);
 
     // When
-    CreateJWTQueueTokenService.Output output = createJWTQueueTokenService.create(input);
+    CreateJWTWaitingTokenService.Output output = createJWTWaitingTokenService.create(input);
 
     // Then
     assertThat(output).isNotNull();
@@ -131,6 +132,6 @@ public class CreateJWTQueueTokenServiceTest {
     assertThat(claims.getSubject()).isEqualTo(userUuid.toString());
 
     // 저장 로직 검증
-    verify(queueTokenRepository, times(1)).save(any(QueueTokenEntity.class));
+    verify(waitingTokenRepository, times(1)).save(any(WaitingTokenEntity.class));
   }
 }

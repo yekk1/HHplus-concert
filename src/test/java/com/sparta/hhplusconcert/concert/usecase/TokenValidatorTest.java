@@ -1,9 +1,9 @@
-package com.sparta.hhplusconcert.queue.usecase;
+package com.sparta.hhplusconcert.concert.usecase;
 
-import com.sparta.hhplusconcert.queue.domain.Status;
-import com.sparta.hhplusconcert.queue.domain.TokenValidator;
-import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.concert.domain.Status;
+import com.sparta.hhplusconcert.concert.domain.TokenValidator;
+import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
+import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +18,7 @@ import static org.mockito.Mockito.when;
 public class TokenValidatorTest {
 
   @Mock
-  private QueueTokenRepositoryImpl queueTokenRepository;
+  private WaitingTokenRepositoryImpl waitingTokenRepository;
 
   @InjectMocks
   private TokenValidator tokenValidator;
@@ -33,7 +33,7 @@ public class TokenValidatorTest {
     // Given
     String token = "testToken";
     UUID userUuid = UUID.randomUUID();
-    QueueTokenEntity queueToken = QueueTokenEntity.builder()
+    WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
         .userId(userUuid)
         .status(Status.CONNECTED)
@@ -41,7 +41,7 @@ public class TokenValidatorTest {
         .build();
 
     // When
-    when(queueTokenRepository.check(token)).thenReturn(queueToken);
+    when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
     // Then
     Boolean result = tokenValidator.isValid(token);
@@ -53,7 +53,7 @@ public class TokenValidatorTest {
     // Given
     String token = "testToken";
     UUID userUuid = UUID.randomUUID();
-    QueueTokenEntity queueToken = QueueTokenEntity.builder()
+    WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
         .userId(userUuid)
         .status(Status.WAITING)
@@ -61,7 +61,7 @@ public class TokenValidatorTest {
         .build();
 
     // When
-    when(queueTokenRepository.check(token)).thenReturn(queueToken);
+    when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
     // Then
     Boolean result = tokenValidator.isValid(token);
@@ -73,7 +73,7 @@ public class TokenValidatorTest {
     // Given
     String token = "testToken";
     UUID userUuid = UUID.randomUUID();
-    QueueTokenEntity queueToken = QueueTokenEntity.builder()
+    WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
         .userId(userUuid)
         .status(Status.EXPIRED)
@@ -81,7 +81,7 @@ public class TokenValidatorTest {
         .build();
 
     // When
-    when(queueTokenRepository.check(token)).thenReturn(queueToken);
+    when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
     // Then
     Boolean result = tokenValidator.isValid(token);
@@ -93,7 +93,7 @@ public class TokenValidatorTest {
     // Given
     String token = "testToken";
     UUID userUuid = UUID.randomUUID();
-    QueueTokenEntity queueToken = QueueTokenEntity.builder()
+    WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
         .userId(userUuid)
         .status(Status.CONNECTED)
@@ -101,7 +101,7 @@ public class TokenValidatorTest {
         .build();
 
     // When
-    when(queueTokenRepository.check(token)).thenReturn(queueToken);
+    when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
     // Then
     Boolean result = tokenValidator.isValid(token);

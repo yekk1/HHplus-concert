@@ -1,7 +1,7 @@
-package com.sparta.hhplusconcert.queue.domain;
+package com.sparta.hhplusconcert.concert.domain;
 
-import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepository;
+import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
+import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class TokenValidator {
-  @Qualifier("QueueToken")
-  private final QueueTokenRepository queueTokenRepository;
+  @Qualifier("WaitingToken")
+  private final WaitingTokenRepository waitingTokenRepository;
   public Boolean isValid(String token) {
-    QueueTokenEntity queueToken = queueTokenRepository.check(token);
+    WaitingTokenEntity waitingToken = waitingTokenRepository.check(token);
 
-    if (queueToken == null) {
+    if (waitingToken == null) {
       throw new InvalidTokenException("유효한 토큰이 아닙니다.");
     }
-    if(queueToken.isExpired()) {
+    if(waitingToken.isExpired()) {
       throw new ExpiredTokenException("토큰이 만료되었습니다.");
     }
-    if(queueToken.isTokenPassedQueue()) {
+    if(waitingToken.isTokenPassedQueue()) {
       return true;
     }
     throw new InvalidTokenException("유효한 토큰이 아닙니다.");

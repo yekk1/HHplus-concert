@@ -38,7 +38,7 @@ public class PointController {
     return ApiResponse.created(chargeId);
   }
 
-  @PostMapping("/payments")
+  @PostMapping("/pay-seat")
   @ResponseStatus(HttpStatus.CREATED)
   public ApiResponse<Long> paySeat(
       @Valid @RequestBody PaySeatRequest request
