@@ -1,12 +1,13 @@
 package com.sparta.hhplusconcert.queue.domain;
 
 import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepository;
 import jakarta.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,7 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class QueueTokenScheduler {
-  private final QueueTokenRepositoryImpl queueTokenRepository;
+  @Qualifier("QueueToken")
+  private final QueueTokenRepository queueTokenRepository;
 
   //30초에 5명
   //접속 중인 인원이 50명 이상이면 대기

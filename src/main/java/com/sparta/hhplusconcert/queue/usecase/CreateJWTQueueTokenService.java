@@ -4,7 +4,6 @@ package com.sparta.hhplusconcert.queue.usecase;
 import com.sparta.hhplusconcert.queue.domain.Status;
 import com.sparta.hhplusconcert.queue.domain.QueueTokenScheduler;
 import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
-import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
@@ -24,6 +23,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import com.sparta.hhplusconcert.queue.infra.QueueTokenRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +33,7 @@ import org.springframework.stereotype.Service;
 public class CreateJWTQueueTokenService {
 
   @Qualifier("QueueToken")
-  private final QueueTokenRepositoryImpl queueTokenRepository;
+  private final QueueTokenRepository queueTokenRepository;
   private final QueueTokenScheduler   queueTokenScheduler;
   @Getter
   @Builder
