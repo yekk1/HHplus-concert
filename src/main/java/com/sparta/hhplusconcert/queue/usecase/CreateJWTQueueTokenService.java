@@ -24,6 +24,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -31,6 +32,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class CreateJWTQueueTokenService {
 
+  @Qualifier("QueueToken")
   private final QueueTokenRepositoryImpl queueTokenRepository;
   private final QueueTokenScheduler   queueTokenScheduler;
   @Getter

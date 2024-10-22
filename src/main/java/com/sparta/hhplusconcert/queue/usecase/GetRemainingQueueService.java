@@ -7,12 +7,14 @@ import com.sparta.hhplusconcert.queue.domain.entity.QueueTokenEntity;
 import com.sparta.hhplusconcert.queue.infra.QueueTokenRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetRemainingQueueService {
+  @Qualifier("QueueToken")
   private final QueueTokenRepositoryImpl queueTokenRepository;
 
   public Integer get(String token) {
