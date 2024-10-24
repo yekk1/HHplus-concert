@@ -28,7 +28,7 @@ public class UserEntity extends TimeBaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @Column(name = "user_uuid")
+  @Column(name = "user_uuid", columnDefinition = "CHAR(36)")
   private UUID userUuid;
 
   private Long point;
