@@ -8,4 +8,4 @@ INSERT INTO CONCERT_SCHEDULE (concert_id, date, seat_capacity, seat_left) VALUES
 
 INSERT INTO CONCERT_SEAT (concert_id, schedule_id, seat_number, status) VALUES (1, 1, 1, 'EMPTY'), (1, 1, 2, 'EMPTY'), (1, 1, 3, 'EMPTY'), (1, 2, 1, 'EMPTY'), (2, 1, 1, 'EMPTY'), (2, 1, 2, 'EMPTY'), (2, 2, 1, 'EMPTY'),(3, 1, 1, 'EMPTY'), (3, 1, 2, 'EMPTY'), (3, 2, 1, 'EMPTY');
 
-INSERT INTO CONCERT_RESERVATION (seat_id, user_id, status, expired_time) VALUES (1, 1, 'PENDING_PAYMENT', '2024-11-01 12:00:00'), (2, 1, 'PENDING_PAYMENT', '2024-11-01 12:05:00'), (3, 2, 'PENDING_PAYMENT', '2024-11-01 12:10:00'), (4, 3, 'PENDING_PAYMENT', '2024-11-01 12:15:00'), (5, 2, 'PENDING_PAYMENT', '2024-11-01 12:20:00');
+INSERT INTO CONCERT_RESERVATION (seat_id, user_id, status, expired_time) VALUES (1, 1, 'PENDING_PAYMENT', '2024-11-01 12:00:00'), (2, 1, 'PENDING_PAYMENT', '2024-11-01 12:05:00'), (3, 2, 'PENDING_PAYMENT', '2024-11-01 12:10:00'), (4, 3, 'PENDING_PAYMENT', '2024-11-01 12:15:00');
