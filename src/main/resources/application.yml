@@ -1,5 +1,5 @@
 springdoc:
-  packages-to-scan: com.sparta.hhplusconcert.api
+  packages-to-scan: com.sparta.hhplusconcert
   default-consumes-media-type: application/json;charset=UTF-8
   default-produces-media-type: application/json;charset=UTF-8
   swagger-ui:
