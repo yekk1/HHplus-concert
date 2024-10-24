@@ -1,10 +1,10 @@
 package com.sparta.hhplusconcert.concert.usecase;
 
 import com.sparta.hhplusconcert.concert.domain.Status;
-import com.sparta.hhplusconcert.concert.domain.ExpiredTokenException;
 import com.sparta.hhplusconcert.concert.domain.InvalidTokenException;
 import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
 import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
+import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -21,7 +21,7 @@ public class GetRemainingWaitingService {
     WaitingTokenEntity waitingToken = waitingTokenRepository.check(token);
 
     if (waitingToken == null) {
-      throw new InvalidTokenException("유효한 토큰이 아닙니다.");
+      throw new InvalidTokenException(TokenErrorCode.INVALID_WAITING_TOKEN);
     }
 
     // 토큰이 대기 중 상태면 남은 순번 계산
@@ -34,6 +34,6 @@ public class GetRemainingWaitingService {
     if (waitingToken.getStatus() == Status.CONNECTED) {
       return 0; // 접속 완료로 간주
     }
-    throw new ExpiredTokenException("토큰이 만료되었습니다.");
+    throw new InvalidTokenException(TokenErrorCode.EXPIRED_WAITING_TOKEN);
   }
 }

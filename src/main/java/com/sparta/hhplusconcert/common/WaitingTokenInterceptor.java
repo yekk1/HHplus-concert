@@ -1,20 +1,27 @@
-package com.sparta.hhplusconcert.concert.domain;
+package com.sparta.hhplusconcert.common;
 
+import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
+import com.sparta.hhplusconcert.concert.domain.InvalidTokenException;
 import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
 import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
-import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+import org.springframework.web.servlet.HandlerInterceptor;
 
-@Slf4j
-@Service
+@Component
 @RequiredArgsConstructor
-public class TokenValidator {
+public class WaitingTokenInterceptor implements HandlerInterceptor {
   @Qualifier("WaitingToken")
   private final WaitingTokenRepository waitingTokenRepository;
-  public Boolean isValid(String token) {
+  @Override
+  public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+    String token = request.getHeader("X-WAITING-TOKEN");
+    if (token == null) {
+      throw new InvalidTokenException(TokenErrorCode.INVALID_WAITING_TOKEN);
+    }
     WaitingTokenEntity waitingToken = waitingTokenRepository.check(token);
 
     if (waitingToken == null) {
@@ -28,4 +35,5 @@ public class TokenValidator {
     }
     throw new InvalidTokenException(TokenErrorCode.INVALID_WAITING_TOKEN);
   }
+
 }
