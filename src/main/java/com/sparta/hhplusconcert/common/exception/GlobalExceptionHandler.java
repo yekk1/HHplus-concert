@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.exception;
+package com.sparta.hhplusconcert.common.exception;
 
 import com.sparta.hhplusconcert.concert.domain.InvalidTokenException;
 import org.springframework.http.ResponseEntity;

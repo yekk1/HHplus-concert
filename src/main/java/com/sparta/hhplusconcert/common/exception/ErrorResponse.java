@@ -1,4 +1,4 @@
-package com.sparta.hhplusconcert.exception;
+package com.sparta.hhplusconcert.common.exception;
 
 import lombok.Builder;
 import lombok.Getter;

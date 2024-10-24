@@ -2,7 +2,7 @@ package com.sparta.hhplusconcert.concert.domain;
 
 import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
 import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
-import com.sparta.hhplusconcert.exception.TokenErrorCode;
+import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -18,7 +18,7 @@ public class TokenValidator {
     WaitingTokenEntity waitingToken = waitingTokenRepository.check(token);
 
     if (waitingToken == null) {
-      throw new InvalidTokenException(TokenErrorCode.INVALID_TOKEN);
+      throw new InvalidTokenException(TokenErrorCode.INVALID_WAITING_TOKEN);
     }
     if(waitingToken.isExpired()) {
       throw new InvalidTokenException(TokenErrorCode.EXPIRED_WAITING_TOKEN);
@@ -26,6 +26,6 @@ public class TokenValidator {
     if(waitingToken.isTokenPassedQueue()) {
       return true;
     }
-    throw new InvalidTokenException(TokenErrorCode.INVALID_TOKEN);
+    throw new InvalidTokenException(TokenErrorCode.INVALID_WAITING_TOKEN);
   }
 }

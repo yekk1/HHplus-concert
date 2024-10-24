@@ -1,5 +1,6 @@
-package com.sparta.hhplusconcert.exception;
+package com.sparta.hhplusconcert.common.api;
 
+import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
 import com.sparta.hhplusconcert.concert.domain.InvalidTokenException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class TestController {
 
   @GetMapping("/token-invalid")
   public ResponseEntity<Object> getInvalidTokenError() {
-    throw new InvalidTokenException(TokenErrorCode.INVALID_TOKEN);
+    throw new InvalidTokenException(TokenErrorCode.INVALID_WAITING_TOKEN);
   }
 
   @GetMapping("/token-expire")
