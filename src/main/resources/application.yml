@@ -12,7 +12,7 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: create
     #      ddl-auto: validate #날리기 전에 해라
     show-sql: true
     generate-ddl: true
