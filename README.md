@@ -136,3 +136,9 @@ sequenceDiagram
   infra/
     
 ```
+---
+## 동시성 개선 시나리오
+상세한 내용은 [링크](./src/docs/STEP11_동시성개선/동시성관리 개선.md)를 통해 확인하실 수 있습니다.
+![1_기존시나리오.png](./src/docs/STEP11_동시성개선/1_기존시나리오.png)
+![2_Redis의SortedSet도입.png](./src/docs/STEP11_동시성개선/2_Redis의SortedSet도입.png)
+![3_Redis락과SortedSet도입.png](./src/docs/STEP11_동시성개선/3_Redis락과SortedSet도입.png)
