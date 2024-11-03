@@ -13,16 +13,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class ReserveSeatService {
 
-  @Qualifier("ConcertSeat")
   private final ConcertSeatRepository concertSeatRepository;
-  @Qualifier("ConcertReservation")
+
   private final ConcertReservationRepository concertReservationRepository;
   @Getter
   @Builder

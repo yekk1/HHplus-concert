@@ -7,14 +7,13 @@ import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
 import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class GetRemainingWaitingService {
-  @Qualifier("WaitingToken")
+
   private final WaitingTokenRepository waitingTokenRepository;
 
   public Integer get(String token) {

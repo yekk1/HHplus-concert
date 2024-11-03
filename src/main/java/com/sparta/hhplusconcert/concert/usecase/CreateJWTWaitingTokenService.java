@@ -24,15 +24,12 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class CreateJWTWaitingTokenService {
-
-  @Qualifier("WaitingToken")
   private final WaitingTokenRepository waitingTokenRepository;
   private final WaitingTokenScheduler waitingTokenScheduler;
   @Getter

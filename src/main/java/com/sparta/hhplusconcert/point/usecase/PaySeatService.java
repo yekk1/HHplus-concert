@@ -19,21 +19,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class PaySeatService {
-  @Qualifier("ConcertSeat")
   private final ConcertSeatRepository concertSeatRepository;
-  @Qualifier("ConcertReservation")
   private final ConcertReservationRepository concertReservationRepository;
-  @Qualifier("User")
   private final UserRepository userRepository;
-  @Qualifier("PointHistory")
   private final PointHistoryRepository pointHistoryRepository;
-  @Qualifier("Payment")
   private final PaymentRepository paymentRepository;
 
   @Getter
@@ -68,6 +62,7 @@ public class PaySeatService {
     if(user.getPoint() < input.getAmount()) {
       throw new RuntimeException("결제 포인트가 모자랍니다.");
     }
+    //가격검증 로직 추가
     user.setPoint(user.getPoint() - input.getAmount());
     Long userId = userRepository.userPoint(user);
 

@@ -7,14 +7,13 @@ import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @Component
 @RequiredArgsConstructor
 public class WaitingTokenInterceptor implements HandlerInterceptor {
-  @Qualifier("WaitingToken")
+
   private final WaitingTokenRepository waitingTokenRepository;
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {

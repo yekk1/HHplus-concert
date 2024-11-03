@@ -3,12 +3,12 @@ package com.sparta.hhplusconcert.point.infra;
 import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 
 @Repository
 @RequiredArgsConstructor
-@Qualifier("User")
+@Primary
 public class UserRepositoryImpl implements UserRepository {
   private final UserJpaRepository userJpaRepository;
 
