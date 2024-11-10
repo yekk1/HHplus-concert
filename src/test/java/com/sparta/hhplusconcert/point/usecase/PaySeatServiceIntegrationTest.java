@@ -12,6 +12,7 @@ import com.sparta.hhplusconcert.point.domain.entity.UserEntity;
 import com.sparta.hhplusconcert.point.infra.PaymentRepository;
 import com.sparta.hhplusconcert.point.infra.PointHistoryRepository;
 import com.sparta.hhplusconcert.point.infra.UserRepository;
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @Transactional
-class PaySeatServiceConcurrencyTest {
+class PaySeatServiceIntegrationTest {
 
   @Autowired
   private PaySeatService paySeatService;
@@ -59,6 +60,7 @@ class PaySeatServiceConcurrencyTest {
 
   @BeforeEach
   void setUp() {
+    UUID userUuid = UUID.randomUUID();
 
     concertSeat = ConcertSeatEntity.builder()
         .id(1L)
@@ -71,12 +73,14 @@ class PaySeatServiceConcurrencyTest {
     concertReservation = ConcertReservationEntity.builder()
         .id(1L)
         .seatId(1L)
+        .userId(null)
         .status(ReservationStatus.PENDING_PAYMENT)
         .expiredTime(LocalDateTime.now().plusMinutes(5))
         .build();
 
     user = UserEntity.builder()
         .id(1L)
+        .userUuid(userUuid)
         .point(10_000L)
         .build();
 
@@ -85,7 +89,7 @@ class PaySeatServiceConcurrencyTest {
   @Test
   @DisplayName("좌석 결제 동시성 테스트")
   void testConcurrentPayment() throws InterruptedException {
-
+    //given
     PaySeatService.Input input = PaySeatService.Input.builder()
         .reservationId(1L)
         .seatId(1L)
@@ -96,7 +100,7 @@ class PaySeatServiceConcurrencyTest {
     ExecutorService executor = Executors.newFixedThreadPool(2);
     CountDownLatch latch = new CountDownLatch(2);
 
-    // 두 개의 스레드에서 동시에 결제 시도
+    //when
     executor.submit(() -> {
       try {
         paySeatService.pay(input);
@@ -122,6 +126,7 @@ class PaySeatServiceConcurrencyTest {
     concertSeat = concertSeatRepository.getSeatById(1L);
     user = userRepository.getUserData(1L);
 
+    //then
     // 결제가 하나만 성공했는지 확인
     assertEquals(ReservationStatus.PAYMENT_COMPLETED, concertReservation.getStatus());
     assertEquals(SeatStatus.PAID, concertSeat.getStatus());

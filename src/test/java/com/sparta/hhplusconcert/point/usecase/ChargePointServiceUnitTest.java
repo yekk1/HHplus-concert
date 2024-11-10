@@ -14,7 +14,7 @@ import org.mockito.MockitoAnnotations;
 import static org.mockito.Mockito.*;
 import static org.assertj.core.api.Assertions.*;
 
-public class ChargePointServiceTest {
+public class ChargePointServiceUnitTest {
 
   @InjectMocks
   private ChargePointService chargePointService;
@@ -31,7 +31,7 @@ public class ChargePointServiceTest {
   }
 
   @Test
-  void testChargePointSuccess() {
+  void 포인트를_충전할_수_있다() {
     // given
     UUID userUuid = UUID.randomUUID();
     ChargePointService.Input input = ChargePointService.Input.builder()
@@ -45,7 +45,7 @@ public class ChargePointServiceTest {
         .point(500L)
         .build();
 
-    when(userRepository.getUserData(1L)).thenReturn(mockUser);
+    when(userRepository.getUserData(input.getUserId())).thenReturn(mockUser);
     when(userRepository.chargePoint(any(UserEntity.class))).thenReturn(1L);
     when(pointHistoryRepository.chargePoint(any(PointHistoryEntity.class))).thenReturn(1L);
 
@@ -57,22 +57,21 @@ public class ChargePointServiceTest {
     assertThat(output.getUserId()).isEqualTo(1L);
     assertThat(output.getPointHistoryId()).isEqualTo(1L);
 
-    // Verify interactions
+    // verify
     verify(userRepository).getUserData(1L);
     verify(userRepository).chargePoint(any(UserEntity.class));
     verify(pointHistoryRepository).chargePoint(any(PointHistoryEntity.class));
   }
 
   @Test
-  void testChargePointFailure_UserNotFound() {
-    Long userId = 1L;
+  void 존재하지_않는_사용자면__충전에_실패() {
     // given
+    Long userId = 1L;
     ChargePointService.Input input = ChargePointService.Input.builder()
         .userId(userId)
         .amount(100L)
         .build();
 
-    // Mock the case where user is not found
     when(userRepository.getUserData(userId)).thenThrow(new EntityNotFoundException("해당하는 사용자가 존재하지 않습니다. ID: " + userId));
 
     // when, then
@@ -80,9 +79,29 @@ public class ChargePointServiceTest {
         .isInstanceOf(EntityNotFoundException.class)
         .hasMessageContaining("해당하는 사용자가 존재하지 않습니다. ID: " + 1L);
 
-    // Verify interactions
+    // verify
     verify(userRepository).getUserData(1L);
     verify(userRepository, never()).chargePoint(any(UserEntity.class));
     verify(pointHistoryRepository, never()).chargePoint(any(PointHistoryEntity.class));
   }
+
+  @Test
+  void 충전금액이_0이면__충전에_실패() {
+    // given
+    ChargePointService.Input input = ChargePointService.Input.builder()
+        .userId(1L)
+        .amount(0L)
+        .build();
+
+    // when & then
+    assertThatThrownBy(() -> chargePointService.charge(input))
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessageContaining("포인트 충전은 0원 이상부터 가능합니다.");
+
+    // verify
+    verify(userRepository, never()).getUserData(any(Long.class));
+    verify(userRepository, never()).chargePoint(any(UserEntity.class));
+    verify(pointHistoryRepository, never()).chargePoint(any(PointHistoryEntity.class));
+  }
+
 }

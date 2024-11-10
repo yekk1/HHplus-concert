@@ -33,21 +33,25 @@ public class ChargePointService {
   }
   @Transactional
   public Output charge(Input input){
-      UserEntity user = userRepository.getUserData(input.getUserId());
+    if(input.getAmount() == 0) {
+      throw new IllegalArgumentException("포인트 충전은 0원 이상부터 가능합니다.");
+    }
+    UserEntity user = userRepository.getUserData(input.getUserId());
 
-      UserEntity userToSave = UserEntity.builder()
-          .id(user.getId())
-          .userUuid(user.getUserUuid())
-          .point(user.getPoint() + input.getAmount())
-          .build();
-      Long savedUserId = userRepository.chargePoint(userToSave);
+    UserEntity userToSave = UserEntity.builder()
+        .id(user.getId())
+        .userUuid(user.getUserUuid())
+        .point(user.getPoint() + input.getAmount())
+        .build();
+    Long savedUserId = userRepository.chargePoint(userToSave);
 
-      PointHistoryEntity pointHistory = PointHistoryEntity.builder()
-          .userId(input.getUserId())
-          .amount(input.getAmount())
-          .type(PointTransactionType.CHARGE)
-          .build();
-      Long savedHistoryId = pointHistoryRepository.chargePoint(pointHistory);
+    PointHistoryEntity pointHistory = PointHistoryEntity.builder()
+        .userId(input.getUserId())
+        .amount(input.getAmount())
+        .type(PointTransactionType.CHARGE)
+        .build();
+    Long savedHistoryId = pointHistoryRepository.chargePoint(pointHistory);
+
     return Output.builder()
         .userId(savedUserId)
         .pointHistoryId(savedHistoryId)

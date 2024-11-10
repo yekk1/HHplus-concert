@@ -37,12 +37,15 @@ class ChargePointServiceIntergrationTest {
   private UserEntity user;
 
   @Test
-  void testConcurrentChargePoints() throws InterruptedException {
+  void 포인트를_충전할_수_있다() throws InterruptedException {
+    //given
     ChargePointService.Input input = ChargePointService.Input.builder()
         .userId(1L)
         .amount(5_000L) // 초기포인트: 10_000
         .build();
 
+
+    //when
     ExecutorService executor = Executors.newFixedThreadPool(2);
     CountDownLatch latch = new CountDownLatch(2);
 
@@ -67,11 +70,10 @@ class ChargePointServiceIntergrationTest {
       }
     });
 
-    latch.await(); // 모든 스레드가 완료될 때까지 대기
-
+    latch.await();
 
     user = userRepository.getUserData(1L);
-
+    //then
     // 최종 포인트는 15_000L 이어야 함
     assertEquals(15_000L, user.getPoint());
   }

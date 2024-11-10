@@ -26,7 +26,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.LocalDateTime;
 
-public class PaySeatServiceTest {
+public class PaySeatServiceUnitTest {
 
   @Mock
   private ConcertSeatRepositoryImpl concertSeatRepository;
@@ -52,12 +52,19 @@ public class PaySeatServiceTest {
   }
 
   @Test
-  void testPay_SuccessfulPayment() {
-    // Given
+  void 좌석을_결제할_수_있다() {
+    // given
     Long reservationId = 1L;
     Long seatId = 2L;
     Long userId = 3L;
     Long amount = 500L;
+
+    PaySeatService.Input input = PaySeatService.Input.builder()
+        .reservationId(reservationId)
+        .seatId(seatId)
+        .userId(userId)
+        .amount(amount)
+        .build();
     LocalDateTime futureTime = LocalDateTime.now().plusMinutes(5);
 
     ConcertReservationEntity reservation = ConcertReservationEntity.builder()
@@ -94,16 +101,10 @@ public class PaySeatServiceTest {
     when(concertSeatRepository.updateSeat(any(ConcertSeatEntity.class))).thenReturn(seatId);
     when(concertReservationRepository.saveSeatReservation(any(ConcertReservationEntity.class))).thenReturn(reservationId);
 
-    // When
-    PaySeatService.Input input = PaySeatService.Input.builder()
-        .reservationId(reservationId)
-        .seatId(seatId)
-        .userId(userId)
-        .amount(amount)
-        .build();
+    // when
     PaySeatService.Output result = paySeatService.pay(input);
 
-    // Then
+    // then
     assertThat(result).isNotNull();
     assertThat(result.getPaymentId()).isEqualTo(10L);
 
@@ -116,51 +117,44 @@ public class PaySeatServiceTest {
   }
 
   @Test
-  void testPay_ExpiredPayment() {
-    // Given
+  void 만료시간이_지난_좌석이면__결제에_실패한다() {
+    // given
     Long reservationId = 1L;
     Long userId = 3L;
     Long seatId = 2L;
     Long amount = 500L;
+    PaySeatService.Input input = PaySeatService.Input.builder()
+        .reservationId(reservationId)
+        .seatId(seatId)
+        .userId(userId)
+        .amount(amount)
+        .build();
+
     LocalDateTime pastTime = LocalDateTime.now().minusMinutes(5);
 
     ConcertReservationEntity reservation = ConcertReservationEntity.builder()
         .id(reservationId)
+        .seatId(userId)
+        .userId(seatId)
         .status(ReservationStatus.PENDING_PAYMENT)
         .expiredTime(pastTime)
         .build();
 
     when(concertReservationRepository.getReservationById(reservationId)).thenReturn(reservation);
 
-    // When/Then
-    PaySeatService.Input input = PaySeatService.Input.builder()
-        .reservationId(reservationId)
-        .seatId(seatId)
-        .userId(userId)
-        .amount(amount)
-        .build();
-
+    // when/then
     assertThatThrownBy(() -> paySeatService.pay(input))
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("결제시간이 만료되었습니다.");
   }
 
   @Test
-  void testPay_NotPendingStatus() {
-    // Given
+  void 좌석이_취소상태면__결제에_실패한다() {
+    // given
     Long reservationId = 1L;
     Long userId = 3L;
     Long seatId = 2L;
     Long amount = 500L;
-
-    ConcertReservationEntity reservation = ConcertReservationEntity.builder()
-        .id(reservationId)
-        .status(ReservationStatus.PAYMENT_COMPLETED) // 이미 결제 완료 상태
-        .build();
-
-    when(concertReservationRepository.getReservationById(reservationId)).thenReturn(reservation);
-
-    // When/Then
     PaySeatService.Input input = PaySeatService.Input.builder()
         .reservationId(reservationId)
         .seatId(seatId)
@@ -168,6 +162,83 @@ public class PaySeatServiceTest {
         .amount(amount)
         .build();
 
+    LocalDateTime expiredTime = LocalDateTime.now().plusMinutes(5);
+
+    ConcertReservationEntity reservation = ConcertReservationEntity.builder()
+        .id(reservationId)
+        .seatId(userId)
+        .userId(seatId)
+        .status(ReservationStatus.RESERVATION_CANCELED)
+        .expiredTime(expiredTime)
+        .build();
+
+    when(concertReservationRepository.getReservationById(reservationId)).thenReturn(reservation);
+
+    // when/then
+    assertThatThrownBy(() -> paySeatService.pay(input))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("해당 좌석이 결제 대기 상태가 아닙니다.");
+  }
+
+  @Test
+  void 좌석이_결제완료상태면__결제에_실패한다() {
+    // given
+    Long reservationId = 1L;
+    Long userId = 3L;
+    Long seatId = 2L;
+    Long amount = 500L;
+    PaySeatService.Input input = PaySeatService.Input.builder()
+        .reservationId(reservationId)
+        .seatId(seatId)
+        .userId(userId)
+        .amount(amount)
+        .build();
+
+    LocalDateTime expiredTime = LocalDateTime.now().plusMinutes(5);
+
+    ConcertReservationEntity reservation = ConcertReservationEntity.builder()
+        .id(reservationId)
+        .seatId(userId)
+        .userId(seatId)
+        .status(ReservationStatus.PAYMENT_COMPLETED)
+        .expiredTime(expiredTime)
+        .build();
+
+    when(concertReservationRepository.getReservationById(reservationId)).thenReturn(reservation);
+
+    // when/then
+    assertThatThrownBy(() -> paySeatService.pay(input))
+        .isInstanceOf(RuntimeException.class)
+        .hasMessageContaining("해당 좌석이 결제 대기 상태가 아닙니다.");
+  }
+
+  @Test
+  void 좌석이_환불완료상태면__결제에_실패한다() {
+    // given
+    Long reservationId = 1L;
+    Long userId = 3L;
+    Long seatId = 2L;
+    Long amount = 500L;
+    PaySeatService.Input input = PaySeatService.Input.builder()
+        .reservationId(reservationId)
+        .seatId(seatId)
+        .userId(userId)
+        .amount(amount)
+        .build();
+
+    LocalDateTime expiredTime = LocalDateTime.now().plusMinutes(5);
+
+    ConcertReservationEntity reservation = ConcertReservationEntity.builder()
+        .id(reservationId)
+        .seatId(userId)
+        .userId(seatId)
+        .status(ReservationStatus.REFUND_COMPLETED)
+        .expiredTime(expiredTime)
+        .build();
+
+    when(concertReservationRepository.getReservationById(reservationId)).thenReturn(reservation);
+
+    // when/then
     assertThatThrownBy(() -> paySeatService.pay(input))
         .isInstanceOf(RuntimeException.class)
         .hasMessageContaining("해당 좌석이 결제 대기 상태가 아닙니다.");
@@ -175,7 +246,7 @@ public class PaySeatServiceTest {
 
   @Test
   void testPay_InsufficientPoints() {
-    // Given
+    // given
     Long reservationId = 1L;
     Long userId = 3L;
     Long seatId = 2L;
@@ -195,7 +266,7 @@ public class PaySeatServiceTest {
     when(concertReservationRepository.getReservationById(reservationId)).thenReturn(reservation);
     when(userRepository.getUserData(userId)).thenReturn(user);
 
-    // When/Then
+    // when/then
     PaySeatService.Input input = PaySeatService.Input.builder()
         .reservationId(reservationId)
         .seatId(seatId)
