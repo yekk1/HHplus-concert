@@ -31,6 +31,7 @@ public class ConcertScheduleEntity extends TimeBaseEntity {
   @Column(nullable = false)
   private LocalDate date;
 
+  @Builder.Default
   private Integer seatCapacity = 50;
 
   @Column(nullable = false)

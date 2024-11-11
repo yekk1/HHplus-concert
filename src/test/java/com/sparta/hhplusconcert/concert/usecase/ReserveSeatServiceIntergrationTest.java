@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @Transactional
-class ReserveSeatServiceConcurrencyTest {
+class ReserveSeatServiceIntergrationTest {
 
   @Autowired
   private ReserveSeatService reserveSeatService;

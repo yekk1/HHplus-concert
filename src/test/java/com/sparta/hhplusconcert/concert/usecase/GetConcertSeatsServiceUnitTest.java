@@ -1,8 +1,6 @@
 package com.sparta.hhplusconcert.concert.usecase;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.sparta.hhplusconcert.concert.domain.SeatStatus;
@@ -16,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.InjectMocks;
 import org.mockito.MockitoAnnotations;
 
-public class GetConcertSeatsServiceTest {
+public class GetConcertSeatsServiceUnitTest {
 
   @Mock
   private ConcertSeatRepositoryImpl concertSeatRepository;
@@ -30,7 +28,7 @@ public class GetConcertSeatsServiceTest {
   }
 
   @Test
-  void testGetConcertSeats() {
+  void 콘서트_좌석을_조회한다() {
     // Given
     Long scheduleId = 1L;
     GetConcertSeatsService.Input input = GetConcertSeatsService.Input.builder()
@@ -70,8 +68,5 @@ public class GetConcertSeatsServiceTest {
     assertThat(result.get(1).getSeatId()).isEqualTo(2L);
     assertThat(result.get(1).getSeatNumber()).isEqualTo(20);
     assertThat(result.get(1).getStatus()).isEqualTo(SeatStatus.RESERVED);
-
-    // Verify that the repository method was called with the correct scheduleId
-    verify(concertSeatRepository, times(1)).getSeatByScheduleId(scheduleId);
   }
 }

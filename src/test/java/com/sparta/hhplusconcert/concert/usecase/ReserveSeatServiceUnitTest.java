@@ -21,7 +21,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class ReserveSeatServiceTest {
+public class ReserveSeatServiceUnitTest {
 
   @Mock
   private ConcertSeatRepositoryImpl concertSeatRepository;
@@ -39,7 +39,7 @@ public class ReserveSeatServiceTest {
 
   @Test
   @Transactional
-  void testReserveSeatSuccessfully() {
+  void 좌석을__예약할수있다() {
     // Given
     Long seatId = 1L;
     Long userId = 2L;
@@ -48,7 +48,6 @@ public class ReserveSeatServiceTest {
         .userId(userId)
         .build();
 
-    // Seat 상태가 EMPTY인 가상의 좌석 생성
     ConcertSeatEntity seat = ConcertSeatEntity.builder()
         .id(seatId)
         .concertId(1L)
@@ -57,11 +56,10 @@ public class ReserveSeatServiceTest {
         .status(SeatStatus.EMPTY)
         .build();
 
-    // 예약 정보가 없는 경우
     List<ConcertReservationEntity> reservations = Collections.emptyList();
 
-    // 저장될 ConcertReservationEntity 객체 생성
     ConcertReservationEntity reservation = ConcertReservationEntity.builder()
+        .id(1L)
         .seatId(seatId)
         .userId(userId)
         .status(ReservationStatus.PENDING_PAYMENT)
@@ -89,7 +87,7 @@ public class ReserveSeatServiceTest {
 
   @Test
   @Transactional
-  void testReserveSeatAlreadyTaken() {
+  void 이미_예약중인_좌석은__예약에_실패한다() {
     // Given
     Long seatId = 1L;
     Long userId = 2L;

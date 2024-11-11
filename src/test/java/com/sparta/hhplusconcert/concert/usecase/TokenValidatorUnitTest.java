@@ -1,5 +1,7 @@
 package com.sparta.hhplusconcert.concert.usecase;
 
+import com.sparta.hhplusconcert.common.exception.TokenErrorCode;
+import com.sparta.hhplusconcert.concert.domain.InvalidTokenException;
 import com.sparta.hhplusconcert.concert.domain.Status;
 import com.sparta.hhplusconcert.concert.domain.TokenValidator;
 import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
@@ -13,9 +15,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
-public class TokenValidatorTest {
+public class TokenValidatorUnitTest {
 
   @Mock
   private WaitingTokenRepositoryImpl waitingTokenRepository;
@@ -29,9 +32,9 @@ public class TokenValidatorTest {
   }
 
   @Test
-  void testCheck_QueuePassed() {
+  void 유효한_토큰이면__참을_반납한다() {
     // Given
-    String token = "testToken";
+    String token = "testValidToken";
     UUID userUuid = UUID.randomUUID();
     WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
@@ -40,18 +43,18 @@ public class TokenValidatorTest {
         .expiredTime(LocalDateTime.now().plusHours(3))
         .build();
 
-    // When
     when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
+    // When
     // Then
     Boolean result = tokenValidator.isValid(token);
     assertThat(result).isTrue();
   }
 
   @Test
-  void testCheck_QueueNotPassed() {
+  void 유효한_토큰이_아니면__예외를_발생시킨다() {
     // Given
-    String token = "testToken";
+    String token = "testInvalidToken";
     UUID userUuid = UUID.randomUUID();
     WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
@@ -60,18 +63,32 @@ public class TokenValidatorTest {
         .expiredTime(LocalDateTime.now().plusHours(3))
         .build();
 
-    // When
     when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
-    // Then
-    Boolean result = tokenValidator.isValid(token);
-    assertThat(result).isFalse();
+    // When & Then
+    assertThatThrownBy(() -> tokenValidator.isValid(token))
+        .isInstanceOf(RuntimeException.class)
+        .extracting("errorCode")
+        .isEqualTo(TokenErrorCode.INVALID_WAITING_TOKEN);
   }
 
   @Test
-  void testCheck_TokenExpired() {
+  void 존재하는_토큰이_아니면__예외를_발생시킨다() {
     // Given
-    String token = "testToken";
+    String token = "nonexistentToken";
+    when(waitingTokenRepository.check(token)).thenReturn(null);
+
+    // When & Then
+    assertThatThrownBy(() -> tokenValidator.isValid(token))
+        .isInstanceOf(RuntimeException.class)
+        .extracting("errorCode")
+        .isEqualTo(TokenErrorCode.INVALID_WAITING_TOKEN);
+  }
+
+  @Test
+  void 만료된_토큰이면__예외를_발생시킨다() {
+    // Given
+    String token = "testExpiredToken";
     UUID userUuid = UUID.randomUUID();
     WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
@@ -80,18 +97,19 @@ public class TokenValidatorTest {
         .expiredTime(LocalDateTime.now().minusHours(3))
         .build();
 
-    // When
     when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
-    // Then
-    Boolean result = tokenValidator.isValid(token);
-    assertThat(result).isFalse();
+    // When & Then
+    assertThatThrownBy(() -> tokenValidator.isValid(token))
+        .isInstanceOf(InvalidTokenException.class)
+        .extracting("errorCode")
+        .isEqualTo(TokenErrorCode.EXPIRED_WAITING_TOKEN);
   }
 
   @Test
-  void testCheck_TokenExpiredTime() {
+  void 만료_시간이_지난_토큰이면__예외를_발생시킨다() {
     // Given
-    String token = "testToken";
+    String token = "testExpiredToken";
     UUID userUuid = UUID.randomUUID();
     WaitingTokenEntity waitingToken = WaitingTokenEntity.builder()
         .token(token)
@@ -100,11 +118,12 @@ public class TokenValidatorTest {
         .expiredTime(LocalDateTime.now().minusHours(3))
         .build();
 
-    // When
     when(waitingTokenRepository.check(token)).thenReturn(waitingToken);
 
-    // Then
-    Boolean result = tokenValidator.isValid(token);
-    assertThat(result).isFalse();
+    // When & Then
+    assertThatThrownBy(() -> tokenValidator.isValid(token))
+        .isInstanceOf(InvalidTokenException.class)
+        .extracting("errorCode")
+        .isEqualTo(TokenErrorCode.EXPIRED_WAITING_TOKEN);
   }
 }

@@ -1,8 +1,8 @@
 package com.sparta.hhplusconcert.concert.usecase;
 
+import com.sparta.hhplusconcert.concert.domain.WaitingTokenScheduler;
 import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
 import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepositoryImpl;
-import com.sparta.hhplusconcert.concert.usecase.CreateJWTWaitingTokenService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.xml.bind.DatatypeConverter;
@@ -20,13 +20,16 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-public class CreateJWTWaitingTokenServiceTest {
+public class CreateJWTWaitingTokenServiceUnitTest {
 
   @Mock
   private WaitingTokenRepositoryImpl waitingTokenRepository;
 
   @InjectMocks
   private CreateJWTWaitingTokenService createJWTWaitingTokenService;
+
+  @Mock
+  private WaitingTokenScheduler waitingTokenScheduler;
 
   private static final String SECRET_KEY = "concertSecretKey";
 
@@ -36,7 +39,7 @@ public class CreateJWTWaitingTokenServiceTest {
   }
 
   @Test
-  void testCreateJWTwaitingToken_Success() {
+  void 대기열_토큰을_발급받을_수_있다() {
     // Given
     UUID userUuid = UUID.randomUUID();
     CreateJWTWaitingTokenService.Input input = CreateJWTWaitingTokenService.Input.builder()
@@ -62,7 +65,7 @@ public class CreateJWTWaitingTokenServiceTest {
     assertThat(claims.get("iat")).isNotNull();
     assertThat(claims.get("exp")).isNotNull();
 
-    // 저장 로직 호출 여부 검증
+    // Verify
     verify(waitingTokenRepository, times(1)).save(any(WaitingTokenEntity.class));
   }
 
@@ -101,7 +104,7 @@ public class CreateJWTWaitingTokenServiceTest {
     assertThat(expiration).isNotNull();
     assertThat(expiration.isAfter(issuedAt)).isTrue();
 
-    // 저장 로직 검증
+    // Verify
     verify(waitingTokenRepository, times(1)).save(any(WaitingTokenEntity.class));
   }
 
