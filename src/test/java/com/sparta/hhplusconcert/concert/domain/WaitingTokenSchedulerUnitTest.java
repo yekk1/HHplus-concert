@@ -1,18 +1,16 @@
 package com.sparta.hhplusconcert.concert.domain;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-import com.sparta.hhplusconcert.concert.domain.WaitingTokenScheduler;
-import com.sparta.hhplusconcert.concert.domain.Status;
 import com.sparta.hhplusconcert.concert.domain.entity.WaitingTokenEntity;
 import com.sparta.hhplusconcert.concert.infra.WaitingTokenRepositoryImpl;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
+import java.util.UUID;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.PageRequest;
 
-public class WaitingTokenSchedulerTest {
+public class WaitingTokenSchedulerUnitTest {
 
   @InjectMocks
   private WaitingTokenScheduler waitingTokenScheduler;
@@ -34,7 +32,7 @@ public class WaitingTokenSchedulerTest {
   }
 
   @Test
-  void pushQueue_whenConnectedUsersExceedsLimit_shouldNotUpdateQueue() {
+  void 접속_인원이_제한_인원을_초과하면__대기열을_업데이트하지_않는다() {
     // Given
     when(waitingTokenRepository.countByStatus(Status.CONNECTED)).thenReturn(51L);
 
@@ -46,7 +44,7 @@ public class WaitingTokenSchedulerTest {
   }
 
   @Test
-  void pushQueue_whenWaitingTokensAvailable_shouldUpdateTokensToConnected() {
+  void 대기중인_토큰이_있으면__대기열을_업데이트한다() {
     // Given
     when(waitingTokenRepository.countByStatus(Status.CONNECTED)).thenReturn(30L);
     when(waitingTokenRepository.findTopByStatusWaiting(Status.WAITING, PageRequest.of(0, 5)))
@@ -61,13 +59,13 @@ public class WaitingTokenSchedulerTest {
   }
 
   @Test
-  void pushQueue_whenNoWaitingTokens_shouldLogNoTokensFound() {
+  void 대기중인_토큰이_없으면__대기열을_업데이트하지_않는다() {
     // Given
     when(waitingTokenRepository.countByStatus(Status.CONNECTED)).thenReturn(30L);
     when(waitingTokenRepository.findTopByStatusWaiting(Status.WAITING, PageRequest.of(0, 5)))
         .thenReturn(Collections.emptyList());
 
-    // When
+    // When & Then
     waitingTokenScheduler.pushQueue();
 
     // Then
@@ -75,12 +73,20 @@ public class WaitingTokenSchedulerTest {
   }
 
   @Test
-  void expirewaitingToken_whenExpiredTokensPresent_shouldUpdateToExpired() {
+  void 만료_시간이_지난_토큰이_있으면__상태를_만료로_업데이트한다() {
     // Given
-    LocalDateTime issuedTime = LocalDateTime.now();
-    WaitingTokenEntity expiredToken = WaitingTokenEntity.builder().id(1L).issuedTime(issuedTime).build();
-    expiredToken.setStatus(Status.WAITING);
-    when(waitingTokenRepository.getExpiredwaitingTokens(issuedTime))
+    LocalDateTime issuedTime = LocalDateTime.now().minusMinutes(15);
+    LocalDateTime expiredTime = LocalDateTime.now().minusMinutes(5);
+    WaitingTokenEntity expiredToken = WaitingTokenEntity.builder()
+        .id(1L)
+        .userId(UUID.randomUUID())
+        .token("token")
+        .issuedTime(issuedTime)
+        .expiredTime(expiredTime)
+        .status(Status.WAITING)
+        .build();
+
+    when(waitingTokenRepository.getExpiredwaitingTokens(any(LocalDateTime.class)))
         .thenReturn(List.of(expiredToken));
 
     // When
@@ -88,11 +94,13 @@ public class WaitingTokenSchedulerTest {
 
     // Then
     assertThat(expiredToken.getStatus()).isEqualTo(Status.EXPIRED);
+
+    // Verify
     verify(waitingTokenRepository).saveAll(List.of(expiredToken));
   }
 
   @Test
-  void expirewaitingToken_whenNoExpiredTokens_shouldLogNoExpiredTokens() {
+  void 만료_시간이_지난_토큰이_없으면__상태를_업데이트하지_않는다() {
     // Given
     when(waitingTokenRepository.getExpiredwaitingTokens(LocalDateTime.now()))
         .thenReturn(Collections.emptyList());
@@ -100,22 +108,7 @@ public class WaitingTokenSchedulerTest {
     // When
     waitingTokenScheduler.expirewaitingToken();
 
-    // Then
+    // Verify
     verify(waitingTokenRepository, never()).saveAll(any());
-  }
-
-  @Test
-  void expirewaitingToken_whenSaveFails_shouldThrowRuntimeException() {
-    // Given
-    WaitingTokenEntity expiredToken = WaitingTokenEntity.builder().id(1L).build();
-    expiredToken.setStatus(Status.WAITING);
-    when(waitingTokenRepository.getExpiredwaitingTokens(LocalDateTime.now()))
-        .thenReturn(List.of(expiredToken));
-    when(waitingTokenRepository.saveAll(any())).thenReturn(0); // Simulate failure
-
-    // When & Then
-    assertThatThrownBy(() -> waitingTokenScheduler.expirewaitingToken())
-        .isInstanceOf(RuntimeException.class)
-        .hasMessage("토큰 만료 처리를 실패했습니다.");
   }
 }

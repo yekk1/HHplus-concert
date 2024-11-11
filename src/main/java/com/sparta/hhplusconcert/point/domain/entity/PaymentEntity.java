@@ -33,5 +33,6 @@ public class PaymentEntity extends TimeBaseEntity {
 
   private Long amount;
 
+  @Builder.Default
   private Boolean cancel = false;
 }

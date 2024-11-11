@@ -7,11 +7,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class WaitingTokenScheduler {
@@ -23,7 +25,10 @@ public class WaitingTokenScheduler {
   @Scheduled(fixedRate = 30_000)
   public void pushQueue(){
     Long connectedUserCount = waitingTokenRepository.countByStatus(Status.CONNECTED);
-    if(connectedUserCount > 50) return;
+    if(connectedUserCount > 50){
+      log.info("활성화 된 토큰이 접속 제한 수를 초과하여 대기열을 업데이트 하지 않았습니다.");
+      return;
+    }
 
     Pageable pageable = PageRequest.of(0, 5);
     List<WaitingTokenEntity> waitingTokenList = waitingTokenRepository.findTopByStatusWaiting(Status.WAITING, pageable);
@@ -34,12 +39,10 @@ public class WaitingTokenScheduler {
     if (!ids.isEmpty()) {
       Integer updatedCount = waitingTokenRepository.pushQueue(ids);
       if (updatedCount > 0) {
-        System.out.println(updatedCount + " records updated to CONNECTED.");
-      } else {
-        System.out.println("No records were updated.");
+        log.info(updatedCount + " 개의 대기 토큰이 활성화 되었습니다.");
       }
     } else {
-      System.out.println("No waiting tokens found.");
+      log.info("대기중인 토큰이 없습니다.");
     }
   }
 
@@ -55,12 +58,9 @@ public class WaitingTokenScheduler {
       for (WaitingTokenEntity expiredwaitingToken : expiredwaitingTokens) {
         expiredwaitingToken.setStatus(Status.EXPIRED);
       }
-      Integer savedTokensSize = waitingTokenRepository.saveAll(expiredwaitingTokens);
-      if (savedTokensSize != expiredwaitingTokens.size()){
-        throw new RuntimeException("토큰 만료 처리를 실패했습니다.");
-      }
+      waitingTokenRepository.saveAll(expiredwaitingTokens);
     } else {
-      System.out.println("기간 만료 된 토큰이 없습니다.");
+      log.info("기간 만료 된 토큰이 없습니다.");
     }
   }
 }
